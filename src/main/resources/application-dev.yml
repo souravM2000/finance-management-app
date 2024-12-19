@@ -1,0 +1,6 @@
+
+
+######## CHECK MAIL ########
+checkMail:
+  key: ${CHECK_MAIL_KEY}
+  host: ${CHECK_MAIL_HOST}
