@@ -13,6 +13,7 @@ import com.kshirsa.userservice.service.declaration.UserOtpService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
+import jakarta.validation.constraints.NotNull;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -33,13 +34,13 @@ public class UserAuthController extends BaseController {
 
     @Operation(summary = "Generate OTP for email validation for sign up & login")
     @GetMapping(path="/otp")
-    public ResponseEntity<SuccessResponse<GenerateOtpResponse>> generateEmailOtp(@NonNull String email) throws CustomException, MessagingException {
+    public ResponseEntity<SuccessResponse<GenerateOtpResponse>> generateEmailOtp(@NotNull String email) throws CustomException, MessagingException {
         return ok(userOtpService.generateOtp(email), env.getProperty("OTP.SENT") + email);
     }
 
     @Operation(summary = "Validate OTP for login & get access tokens in response")
     @PostMapping("/otp/validate")
-    public ResponseEntity<SuccessResponse<LoginResponse>> otpValidate(@RequestBody OtpValidateRequest request) throws CustomException {
+    public ResponseEntity<SuccessResponse<LoginResponse>> otpValidate(@RequestBody OtpValidateRequest request) throws CustomException, MessagingException {
         return ok(userAuthService.otpValidateFlow(request), env.getProperty("USER.LOGGEDIN"));
     }
 
@@ -51,7 +52,7 @@ public class UserAuthController extends BaseController {
 
     @Operation(summary = "Logout user and delete Refresh Token")
     @PostMapping(path="/logout")
-    public ResponseEntity<SuccessResponse<Boolean>> logout(@NonNull String token) throws CustomException {
+    public ResponseEntity<SuccessResponse<Boolean>> logout(@NonNull String token) {
         return ok(userAuthService.logout(token), env.getProperty("NEW.TOKEN.GENERATED"));
     }
 

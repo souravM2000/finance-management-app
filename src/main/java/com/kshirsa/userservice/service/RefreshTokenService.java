@@ -38,19 +38,20 @@ public class RefreshTokenService {
                 .orElseThrow(() -> new CustomException(ErrorCode.REFRESH_TOKEN_NOT_FOUND.name()));
     }
 
-    public Instant extractExpiration(String token) throws CustomException {
-        return retrieveTokenFromDb(token).getExpirationDate();
-    }
-
     public Instant extendTokenTime(String token) throws CustomException {
         RefreshToken rt = retrieveTokenFromDb(token);
         rt.setExpirationDate(Instant.now().plusSeconds(REFRESH_TOKEN_VALIDITY));
         return refreshTokenRepository.save(rt).getExpirationDate();
     }
 
-    public Boolean tokenValidation(String token) throws CustomException {
+    public Integer tokenValidation(String token) throws CustomException {
         RefreshToken refreshToken = retrieveTokenFromDb(token);
-        return refreshToken.getExpirationDate().isAfter(Instant.now());
+        if(refreshToken.getExpirationDate().isAfter(Instant.now())){
+            return refreshToken.getUserId();
+        }else {
+            refreshTokenRepository.delete(refreshToken);
+            throw new CustomException(ErrorCode.REFRESH_TOKEN_EXPIRED.name());
+        }
     }
 
     public void deleteToken(String input) {

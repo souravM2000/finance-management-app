@@ -1,5 +1,6 @@
 package com.kshirsa.userservice.dto.request;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kshirsa.userservice.UserConstants;
 import jakarta.validation.constraints.Pattern;
 
@@ -10,5 +11,5 @@ public record SignUpRequest(String name,
                             String countryCode,
                             String country,
                             String gender,
-                            LocalDate dob) {
+                            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy") LocalDate dob) {
 }

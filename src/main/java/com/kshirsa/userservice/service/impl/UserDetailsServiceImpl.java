@@ -34,6 +34,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         user.setName(request.name());
         user.setPhoneNumber(request.phoneNumber());
         user.setCountryCode(request.countryCode());
+        user.setCountry(request.country());
         user.setGender(request.gender());
         user.setDob(request.dob());
         return userRepository.save(user);

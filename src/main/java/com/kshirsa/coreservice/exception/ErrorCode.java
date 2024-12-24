@@ -18,13 +18,12 @@ public enum ErrorCode {
     JWT_WRONG_SIGNATURE(401, 126, "Provided JWT signature is not valid. Please provide valid JWT."),
 
     INVALID_OTP(400, 128, "OTP invalid or expired."),
-    OTP_VALIDATION_EXPIRED(400, 129, "OTP validation time expired. Please try again."),
     INVALID_USER_ID(400, 130, "Given user id is not valid."),
 
     INVALID_MOBILE(400, 133, "Given mobile number is in invalid format."),
-    INVALID_EMAIL(400, 134, "Given email is in invalid format."),
+    INVALID_EMAIL(400, 134, "Given email is not valid."),
 
-    EMAIL_NOT_BLANK(400, 140, "Email can not be blank"),
+    NOT_BLANK(400, 140, "This field can not be blank/null"),
     PASSWORD_NOT_BLANK(400, 141, "Password can not be blank"),
 
     DISPOSABLE_EMAIL(400, 142, "Disposable email is not allowed"),

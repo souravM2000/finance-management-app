@@ -1,5 +1,6 @@
 package com.kshirsa.userservice.service.impl;
 
+import com.kshirsa.coreservice.BaseConstants;
 import com.kshirsa.coreservice.exception.CustomException;
 import com.kshirsa.coreservice.exception.ErrorCode;
 import com.kshirsa.userservice.EmailValidationType;
@@ -49,18 +50,19 @@ public class UserOtpServiceImpl implements UserOtpService {
             else if (res.isDisposable())
                 throw new CustomException(ErrorCode.DISPOSABLE_EMAIL.name());
             else
-                throw new CustomException(ErrorCode.INVALID_USER_ID.name());
+                throw new CustomException(ErrorCode.INVALID_EMAIL_DOMAIN.name());
         }
         return false;
     }
 
     @Override
     public GenerateOtpResponse generateOtp(String email) throws MessagingException, CustomException {
-        if(email.equalsIgnoreCase("s@g.com") || email.equalsIgnoreCase("k@g.com")){
+        if (BaseConstants.ADMIN_EMAILS.contains(email)) {
             otpDetailsRepository
                     .save(new OtpDetails(email.toLowerCase(), 8520, LocalDateTime.now().plusMinutes(UserConstants.OTP_VALIDITY)));
             return new GenerateOtpResponse(true, email);
         }
+
         if (validateEmail(email)) {
             int otp = new Random().nextInt(1001, 10000);
             otpDetailsRepository

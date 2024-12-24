@@ -8,6 +8,7 @@ import com.kshirsa.userservice.dto.request.SignUpRequest;
 import com.kshirsa.userservice.entity.UserDetails;
 import com.kshirsa.userservice.service.declaration.UserDetailsService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = BaseConstants.ROOT_PATH + "/my", produces = "application/json")
 @RequiredArgsConstructor
 @Validated
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "User Details Controller", description = "Authenticated endpoints for user details")
 
 public class UserDetailsController extends BaseController {
