@@ -1,4 +1,4 @@
-package com.kshirsa.coreservice;
+package com.kshirsa.coreservice.exception;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
