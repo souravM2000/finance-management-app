@@ -17,7 +17,6 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import java.util.Arrays;
 import java.util.List;
 
 @Configuration
@@ -31,7 +30,7 @@ public class SecurityConfig {
     private final JwtFilter jwtFilter;
 
     String[] publicURL = {
-            "/api/v1/public/**",
+            "/api/v1/auth/**",
             "/actuator/**", "/v3/api-docs", "/swagger-ui/**", "/swagger-ui.html",
             "/swagger-resources/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui/", "/swagger-ui"
     };
@@ -58,7 +57,8 @@ public class SecurityConfig {
     @Bean
     CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
+//        configuration.setAllowedOrigins(Arrays.asList(allowedOrigins.split(",")));
+        configuration.setAllowedOrigins(List.of("*"));
         configuration.setAllowedMethods(List.of("*"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);
