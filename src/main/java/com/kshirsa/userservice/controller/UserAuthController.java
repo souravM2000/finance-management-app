@@ -32,7 +32,7 @@ public class UserAuthController extends BaseController {
     private final Environment env;
 
     @Operation(summary = "Generate OTP for email validation for sign up & login")
-    @GetMapping(path="/otp",consumes = "text/plain")
+    @GetMapping(path="/otp")
     public ResponseEntity<SuccessResponse<GenerateOtpResponse>> generateEmailOtp(@NonNull String email) throws CustomException, MessagingException {
         return ok(userOtpService.generateOtp(email), env.getProperty("OTP.SENT") + email);
     }
@@ -44,13 +44,13 @@ public class UserAuthController extends BaseController {
     }
 
     @Operation(summary = "Get new JWT token from refresh token")
-    @GetMapping(path="/refresh", consumes = "text/plain")
+    @GetMapping(path="/refresh")
     public ResponseEntity<SuccessResponse<NewTokenResponse>> refreshToken(@NonNull String token) throws CustomException {
         return ok(userAuthService.refreshToken(token), env.getProperty("NEW.TOKEN.GENERATED"));
     }
 
     @Operation(summary = "Logout user and delete Refresh Token")
-    @PostMapping(path="/logout", consumes = "text/plain")
+    @PostMapping(path="/logout")
     public ResponseEntity<SuccessResponse<Boolean>> logout(@NonNull String token) throws CustomException {
         return ok(userAuthService.logout(token), env.getProperty("NEW.TOKEN.GENERATED"));
     }
