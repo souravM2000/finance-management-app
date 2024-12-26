@@ -42,3 +42,6 @@ jobs:
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/kshirsa:prod
             ${{ secrets.DOCKER_HUB_USERNAME }}/kshirsa:${{ github.sha }}
+
+      - name: Trigger Render Deployment
+        run: curl -X GET ${{ secrets.RENDER_DEPLOY_HOOK_URL_PROD }}
