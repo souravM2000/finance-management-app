@@ -29,7 +29,7 @@ public class GeneralConfig {
     void renderKeepAlive() {
         if (Arrays.asList(env.getActiveProfiles()).contains("dev")) {
             RestTemplate restTemplate = new RestTemplate();
-            restTemplate.getForEntity("https://ecommerce-backend-customer-service.onrender.com/user/api/auth/index", String.class);
+            restTemplate.getForEntity("https://kshirsa-money-dev.onrender.com/kshirsa/api/v1/auth/index", String.class);
         }
     }
 }
