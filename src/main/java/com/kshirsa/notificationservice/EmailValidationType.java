@@ -1,4 +1,4 @@
-package com.kshirsa.userservice;
+package com.kshirsa.notificationservice;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

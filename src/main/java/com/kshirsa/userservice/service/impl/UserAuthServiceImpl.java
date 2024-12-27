@@ -10,7 +10,7 @@ import com.kshirsa.userservice.entity.RefreshToken;
 import com.kshirsa.userservice.entity.UserDetails;
 import com.kshirsa.userservice.repository.UserDetailsRepository;
 import com.kshirsa.userservice.security.JwtHelper;
-import com.kshirsa.userservice.service.EmailService;
+import com.kshirsa.notificationservice.EmailService;
 import com.kshirsa.userservice.service.RefreshTokenService;
 import com.kshirsa.userservice.service.declaration.UserAuthService;
 import com.kshirsa.userservice.service.declaration.UserOtpService;

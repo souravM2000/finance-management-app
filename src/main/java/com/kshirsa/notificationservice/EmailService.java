@@ -1,6 +1,5 @@
-package com.kshirsa.userservice.service;
+package com.kshirsa.notificationservice;
 
-import com.kshirsa.userservice.EmailValidationType;
 import com.kshirsa.userservice.UserConstants;
 import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
