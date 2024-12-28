@@ -1,4 +1,4 @@
-package com.kshirsa.userservice.exernalservice;
+package com.kshirsa.userservice.externalservice.checkmail;
 
 public class CheckMailConstants {
 

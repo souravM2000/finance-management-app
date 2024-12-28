@@ -16,4 +16,8 @@ public class UserConstants {
     public static final String EMAIL_REGEX = "[A-Za-z0-9-\\.]+@[A-Za-z0-9]+\\.[A-Za-z]+";
 
     public static final String PHONE_NUMBER_REGEX = "^(?=[6-9])\\d{10}$";
+
+    public static final String X_FORWARDED_FOR = "X-Forwarded-For";
+
+    public static final String DEVICE_ID = "device-id";
 }
