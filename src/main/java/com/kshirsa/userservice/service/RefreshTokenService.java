@@ -26,16 +26,16 @@ public class RefreshTokenService {
 
     private final RefreshTokenRepository refreshTokenRepository;
 
-    public RefreshToken getRefreshToken(Integer userId) {
+    public RefreshToken getRefreshToken(Integer userId, String deviceId) {
         RefreshToken newToken = new RefreshToken(userId, UUID.randomUUID().toString(),
-                Instant.now().plusSeconds(REFRESH_TOKEN_VALIDITY));
+                Instant.now().plusSeconds(REFRESH_TOKEN_VALIDITY), deviceId);
         refreshTokenRepository.save(newToken);
         return newToken;
     }
 
     public RefreshToken retrieveTokenFromDb(String token) throws CustomException {
-        return refreshTokenRepository.findByToken(token)
-                .orElseThrow(() -> new CustomException(ErrorCode.REFRESH_TOKEN_NOT_FOUND.name()));
+        return refreshTokenRepository.findByToken(token).orElseThrow(() ->
+                new CustomException(ErrorCode.REFRESH_TOKEN_NOT_FOUND.name()));
     }
 
     public Instant extendTokenTime(String token) throws CustomException {
@@ -44,11 +44,19 @@ public class RefreshTokenService {
         return refreshTokenRepository.save(rt).getExpirationDate();
     }
 
-    public Integer tokenValidation(String token) throws CustomException {
+    public Integer tokenValidation(String token, String deviceId) throws CustomException {
         RefreshToken refreshToken = retrieveTokenFromDb(token);
-        if(refreshToken.getExpirationDate().isAfter(Instant.now())){
-            return refreshToken.getUserId();
-        }else {
+
+        if (refreshToken.getExpirationDate().isAfter(Instant.now())) {          //Checking if token is expired
+
+            if (refreshToken.getDeviceId().equals(deviceId)) {                  //Checking if token is from same device
+                return refreshToken.getUserId();
+            } else {
+                refreshTokenRepository.delete(refreshToken);
+                throw new CustomException(ErrorCode.UNKNOWN_DEVICE.name());
+            }
+
+        } else {
             refreshTokenRepository.delete(refreshToken);
             throw new CustomException(ErrorCode.REFRESH_TOKEN_EXPIRED.name());
         }

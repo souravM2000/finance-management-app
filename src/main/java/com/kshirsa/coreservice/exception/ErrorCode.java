@@ -7,27 +7,28 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum ErrorCode {
 
-    GENERAL_EXCEPTION(500, 100, "Something went wrong"),
+    // Authentication and Authorization Errors (6xx)
+    USER_NOT_FOUND(404, 601, "User with this email ID does not exist."),
+    REFRESH_TOKEN_NOT_FOUND(404, 602, "Refresh token not found. Please authenticate again."),
+    REFRESH_TOKEN_EXPIRED(403, 603, "Refresh token has expired. Please re-authenticate."),
+    JWT_EXPIRED(401, 604, "JWT has expired. Please log in again."),
+    JWT_WRONG_SIGNATURE(401, 605, "JWT signature is invalid. Please provide a valid token."),
+    UNKNOWN_DEVICE(401, 606, "Device ID mismatch. Access denied."),
 
-    USER_NOT_FOUND(404, 111, "UserDetails with this email id does not exist."),
-    EMAIL_ALREADY_EXISTS(422, 116, "Email Id already in use. Try with another email."),
+    // User Input Validation Errors (7xx)
+    INVALID_OTP(400, 701, "OTP is invalid or has expired."),
+    INVALID_USER_ID(400, 702, "The provided user ID is not valid."),
+    INVALID_MOBILE(400, 703, "The provided mobile number is in an invalid format."),
+    INVALID_EMAIL(400, 704, "The provided email address is in invalid format."),
+    NOT_BLANK(400, 705, "This field cannot be blank or null."),
+    DISPOSABLE_EMAIL(400, 707, "Disposable email addresses are not allowed."),
+    INVALID_EMAIL_DOMAIN(400, 708, "The email domain is invalid."),
 
-    REFRESH_TOKEN_NOT_FOUND(404, 122, "Refresh token not found."),
-    REFRESH_TOKEN_EXPIRED(403, 123, "Refresh Token is Expired."),
-    JWT_EXPIRED(401, 125, "Provided JWT is Expired."),
-    JWT_WRONG_SIGNATURE(401, 126, "Provided JWT signature is not valid. Please provide valid JWT."),
+    // Business Logic and Entity Errors (8xx)
+    EMAIL_ALREADY_EXISTS(422, 801, "Email ID is already in use. Please use a different email address."),
 
-    INVALID_OTP(400, 128, "OTP invalid or expired."),
-    INVALID_USER_ID(400, 130, "Given user id is not valid."),
-
-    INVALID_MOBILE(400, 133, "Given mobile number is in invalid format."),
-    INVALID_EMAIL(400, 134, "Given email is not valid."),
-
-    NOT_BLANK(400, 140, "This field can not be blank/null"),
-    PASSWORD_NOT_BLANK(400, 141, "Password can not be blank"),
-
-    DISPOSABLE_EMAIL(400, 142, "Disposable email is not allowed"),
-    INVALID_EMAIL_DOMAIN(400, 143, "Invalid email domain");
+    // Server or General Errors (9xx)
+    GENERAL_EXCEPTION(500, 901, "An unexpected error occurred. Please try again later.");
 
     private final int httpStatusCode;
     private final int errorCode;

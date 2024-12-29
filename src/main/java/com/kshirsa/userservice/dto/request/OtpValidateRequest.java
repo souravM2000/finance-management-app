@@ -1,4 +1,8 @@
 package com.kshirsa.userservice.dto.request;
 
-public record OtpValidateRequest(String email, int otp) {
+import com.kshirsa.userservice.UserConstants;
+import jakarta.validation.constraints.Pattern;
+
+public record OtpValidateRequest(@Pattern(regexp= UserConstants.EMAIL_REGEX, message = "INVALID_EMAIL_FORMAT") String email,
+                                 int otp) {
 }

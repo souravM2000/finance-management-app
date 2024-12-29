@@ -19,5 +19,6 @@ public class RefreshToken {
 	@Id
 	private String token;
 	private Instant expirationDate;
+	private String deviceId;
 	
 }

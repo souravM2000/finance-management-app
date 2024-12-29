@@ -5,12 +5,12 @@ import com.kshirsa.userservice.dto.request.OtpValidateRequest;
 import com.kshirsa.userservice.dto.response.LoginResponse;
 import com.kshirsa.userservice.dto.response.NewTokenResponse;
 import jakarta.mail.MessagingException;
-import lombok.NonNull;
+import jakarta.servlet.http.HttpServletRequest;
 
 public interface UserAuthService {
-    LoginResponse otpValidateFlow(OtpValidateRequest request) throws CustomException, MessagingException;
+    LoginResponse otpValidateFlow(OtpValidateRequest request, String deviceId, HttpServletRequest httpRequest) throws CustomException, MessagingException;
 
-    NewTokenResponse refreshToken(@NonNull String token) throws CustomException;
+    NewTokenResponse refreshToken(String token, String deviceId) throws CustomException;
 
-    Boolean logout(@NonNull String token);
+    Boolean logout(String token);
 }
