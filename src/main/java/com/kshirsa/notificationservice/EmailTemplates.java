@@ -82,8 +82,9 @@ public class EmailTemplates {
                     }
                     .header {
                         color: #018665;
-                        font-size: 24px;
+                        font-size: 26px;
                         font-weight: bold;
+                        margin-bottom: 10px;
                     }
                     .message {
                         font-size: 16px;
@@ -110,17 +111,15 @@ public class EmailTemplates {
             </head>
             <body>
             <div class="container">
-                <h2 class="header">Welcome to Kshirsa! 🎉</h2>
-                <p class="message">Hi there,</p>
-                <p class="message">We’re thrilled to have you on board! Kshirsa is your one-stop personal finance app, designed to help you manage your money effortlessly—from budgeting to tracking expenses, and so much more.</p>
-                <p class="message"><b>Quick Tip to Get Started:</b><br>Complete your profile in the app to unlock personalized features and make the most of your experience!</p>
-                <p class="message">Take the first step towards mastering your money today!</p>
-                <p class="footer">Warm Regards,<br><span style="color: #018665;"><b>Team Kshirsa</b></span></p>
+                <h2 class="header">Welcome to Kshirsa!</h2>
+                <p class="message"><strong>Hi there!</strong></p>
+                <p class="message">We're thrilled to have you on board! Kshirsa is your one-stop personal finance app.</p>
+                <p class="message"><strong>Quick Tip to Get Started:</strong><br>Complete your profile today to unlock personalized tips and take control of your finances like a pro!</p>
+                <p class="footer">Cheers,<br><span style="color: #018665;"><b>Team Kshirsa</b></span></p>
                 <div class="footer">© 2024 Kshirsa. All rights reserved.</div>
             </div>
             </body>
             </html>
-            
             """;
 
     public static String newDeviceLogin = """

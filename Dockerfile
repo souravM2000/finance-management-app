@@ -12,4 +12,4 @@ COPY /build/libs /app/build
 EXPOSE 8500
 
 # Specify the command to run on container startup
-CMD ["java", "-jar", "/app/build/Kshirsa-v0.1.jar"]
+CMD ["java", "-jar", "/app/build/Kshirsa-0.1.1-alpha.jar"]
