@@ -1,3 +1,27 @@
 spring:
   profiles:
     active: ${ACTIVE_PROFILE:local}
+  application:
+    name: KshirsaApplication
+  sql:
+    init:
+      mode: always
+  jpa:
+    defer-datasource-initialization: true
+    open-in-view: false
+
+server:
+  servlet:
+    context-path: /kshirsa
+  port: 8500
+  error:
+    whitelabel:
+      enabled: false
+    include-stacktrace: never
+
+###############Swagger###################
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,metrics,caches,loggers,info

@@ -1,0 +1,62 @@
+name: Spring Boot CI/CD
+
+on:
+  push:
+    branches:
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Set up Git LFS
+      - name: Install Git LFS
+        run: git lfs install
+
+      - name: Fetch LFS files
+        run: git lfs pull
+
+      # Set up JDK
+      - name: Set up JDK
+        uses: actions/setup-java@v3
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      # Grant execute permission for gradlew
+      - name: Grant execute permission for gradlew
+        run: chmod +x gradlew
+
+      # Build with Gradle
+      - name: Build with Gradle
+        run: ./gradlew build
+
+      # Set up Docker Buildx
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+
+      # Login to Docker Hub
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+
+      # Build and push Docker image
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_HUB_USERNAME }}/kshirsa:latest
+            ${{ secrets.DOCKER_HUB_USERNAME }}/kshirsa:${{ github.sha }}
+
+      # Trigger Render Deployment
+      - name: Trigger Render Deployment
+        run: curl -X GET ${{ secrets.RENDER_DEPLOY_HOOK_URL_DEV }}

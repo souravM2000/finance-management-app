@@ -1,9 +1,14 @@
 package com.kshirsa.userservice.service.declaration;
 
-import com.kshirsa.userservice.exception.UserException;
+import com.kshirsa.coreservice.exception.CustomException;
+import com.kshirsa.userservice.dto.response.GenerateOtpResponse;
+import jakarta.mail.MessagingException;
 
 public interface UserOtpService {
 
-    public Boolean validateEmail(String email) throws UserException;
-    public String generateOtp(String email);
+    Boolean validateEmail(String email) throws CustomException;
+
+    GenerateOtpResponse generateOtp(String email) throws MessagingException, CustomException;
+
+    Boolean validateOtp(String email, int otp);
 }

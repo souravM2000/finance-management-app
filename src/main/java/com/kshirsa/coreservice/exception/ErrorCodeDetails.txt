@@ -1,0 +1,45 @@
+Error Code Categories
+-------------------------------
+
+1. Authentication and Authorization Errors (601-699)
+---------------------------------------------------------------------------------
+Errors related to user authentication and authorization. These indicate issues with login, tokens, or access control.
+
+ErrorCode	Message
+601	        User with this email ID does not exist.
+602	        Refresh token not found. Please authenticate again.
+603	        Refresh token has expired. Please re-authenticate.
+604	        JWT has expired. Please log in again.
+605	        JWT signature is invalid. Please provide a valid token.
+606	        Device ID mismatch. Access denied. Please use the correct device.
+
+
+2. User Input Validation Errors (701-799)
+-----------------------------------------------------------------------------------------
+Errors related to invalid user input. These occur when the data provided by the user is incorrect or missing.
+
+ErrorCode	Message
+701	        OTP is invalid or has expired.
+702	        The provided user ID is not valid.
+703	        The provided mobile number is in an invalid format.
+704	        The provided email address is not valid.
+705	        This field cannot be blank or null.
+706	        Password cannot be blank.
+707	        Disposable email addresses are not allowed.
+708	        The email domain is invalid.
+
+
+3. Business Logic and Entity Errors (801-899)
+-----------------------------------------------------------------------------
+Errors related to business logic violations. These usually involve conflicts or rules in the system.
+
+ErrorCode	Message
+801	        Email ID is already in use. Please use a different email address.
+
+
+4. Server or General Errors (901)
+---------------------------------------------------------------------------------
+Errors indicating an internal server issue or unexpected failure. These are usually not caused by the user's action.
+
+ErrorCode	Message
+901	        An unexpected error occurred. Please try again later.
