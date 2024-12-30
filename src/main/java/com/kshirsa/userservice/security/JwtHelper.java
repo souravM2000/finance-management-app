@@ -55,7 +55,7 @@ public class JwtHelper {
 
     public String generateToken(Integer userId) {
         Map<String, Object> claims = new HashMap<>();
-        UserDetails user = userDetailsRepository.findById(userId).get();
+        UserDetails user = userDetailsRepository.findById(userId).orElseThrow();
         claims.put("Name", user.getName());
         claims.put("User Email", user.getUserEmail());
         return createToken(claims, userId.toString());

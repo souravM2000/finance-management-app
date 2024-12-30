@@ -2,6 +2,7 @@ package com.kshirsa.coreservice.exception;
 
 import com.kshirsa.coreservice.FailureResponse;
 import io.jsonwebtoken.ExpiredJwtException;
+import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
@@ -54,7 +55,15 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler
+    public ResponseEntity<FailureResponse> constraintViolationException(ConstraintViolationException ex) {
+        ErrorCode ec = ErrorCode.valueOf(ex.getMessage().split(":")[1].strip());
+        ErrorDetails error = new ErrorDetails(ec.getErrorMessage(),null,ec.getErrorCode());
+        return new ResponseEntity<>(new FailureResponse(false, ec.getErrorMessage(),error), HttpStatusCode.valueOf(ec.getHttpStatusCode()));
+    }
+
+    @ExceptionHandler
     public ResponseEntity<FailureResponse> expiredJwtException(ExpiredJwtException ex) {
+        log.error(ex.getMessage());
         ErrorCode ec = ErrorCode.JWT_EXPIRED;
         ErrorDetails error = new ErrorDetails(ec.getErrorMessage(), null, ec.getErrorCode());
         return new ResponseEntity<>(new FailureResponse(false, ec.getErrorMessage(), error), HttpStatusCode.valueOf(ec.getHttpStatusCode()));

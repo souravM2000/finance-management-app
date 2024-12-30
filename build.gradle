@@ -1,11 +1,11 @@
 plugins {
 	id 'java'
-	id 'org.springframework.boot' version '3.3.6'
+	id 'org.springframework.boot' version '3.3.7'
 	id 'io.spring.dependency-management' version '1.1.6'
 }
 
 group = 'com.kshirsa'
-version = 'v0.1'
+version = '0.1.1-alpha'
 
 java {
 	toolchain {
@@ -36,6 +36,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-oauth2-client'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'com.maxmind.geoip2:geoip2:4.2.1'
 	implementation 'com.sendgrid:sendgrid-java:4.10.3'
 	implementation 'org.modelmapper:modelmapper:3.2.0'
 	implementation 'io.jsonwebtoken:jjwt-api:' + jwtVersion
