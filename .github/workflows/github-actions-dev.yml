@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - dev
-      - bugfix/fixGithubWorkflows
 
 jobs:
   build:
@@ -21,16 +20,6 @@ jobs:
 
       - name: Fetch LFS files
         run: git lfs pull
-
-      # Verify .mmdb file is in place
-      - name: Check if .mmdb file exists
-        run: |
-          if [ ! -f src/main/resources/geolite2/GeoLite2-City.mmdb ]; then
-            echo "Error: .mmdb file not found!"
-            exit 1
-          else
-            echo ".mmdb file found at src/main/resources/geolite2/GeoLite2-City.mmdb"
-          fi
 
       # Set up JDK
       - name: Set up JDK

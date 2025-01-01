@@ -179,6 +179,7 @@ public class EmailTemplates {
                 <p class="message">We noticed a login to your Kshirsa account from a new device:</p>
                 <p class="message"><b>Details:</b></p>
                 <ul style="list-style: none; padding: 0; text-align: left; color: #333;">
+                    <li><b>IP Address:</b> %s</li>
                     <li><b>Location:</b> %s</li>
                     <li><b>Time:</b> %s </li>
                 </ul>
