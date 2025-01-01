@@ -1,6 +1,7 @@
 package com.kshirsa.notificationservice;
 
 import com.kshirsa.userservice.UserConstants;
+import com.kshirsa.userservice.externalservice.geolite.LocationFromIpResponse;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,7 @@ public class EmailService {
         sendAsyncEmail.sendEmail(welcomeHtml, subject, email.toLowerCase());
     }
 
-    public void sendNewDeviceLoginEmail(String email, String location) throws MessagingException {
+    public void sendNewDeviceLoginEmail(String email, LocationFromIpResponse location) throws MessagingException {
         String subject = "New Device Login";
         sendAsyncEmail.sendEmail(newDeviceHtmlTemplate(location), subject, email.toLowerCase());
     }
@@ -35,8 +36,8 @@ public class EmailService {
         return String.format(EmailTemplates.otpHtmlTemplate, emailType.getFirstLine(), otp, UserConstants.OTP_VALIDITY);
     }
 
-    public String newDeviceHtmlTemplate(String location) {
-        return String.format(EmailTemplates.newDeviceLogin, location,
+    public String newDeviceHtmlTemplate(LocationFromIpResponse location) {
+        return String.format(EmailTemplates.newDeviceLogin, location.ipAddress(), location.location(),
                 LocalDateTime.now().format(DateTimeFormatter.ofPattern("MMMM dd, yyyy 'at' h:mm a '(IST)'")));
     }
 }

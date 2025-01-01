@@ -9,8 +9,11 @@ import com.kshirsa.userservice.dto.request.OtpValidateRequest;
 import com.kshirsa.userservice.dto.response.GenerateOtpResponse;
 import com.kshirsa.userservice.dto.response.LoginResponse;
 import com.kshirsa.userservice.dto.response.NewTokenResponse;
+import com.kshirsa.userservice.externalservice.geolite.GeoLite2Service;
+import com.kshirsa.userservice.externalservice.geolite.LocationFromIpResponse;
 import com.kshirsa.userservice.service.declaration.UserAuthService;
 import com.kshirsa.userservice.service.declaration.UserOtpService;
+import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.mail.MessagingException;
@@ -68,5 +71,12 @@ public class UserAuthController extends BaseController {
     @GetMapping("/index")
     public String index() {
         return BaseConstants.INDEX_RESPONSE;
+    }
+
+    @Hidden
+    @GetMapping("/getIp")
+    public LocationFromIpResponse test(HttpServletRequest request) {
+        GeoLite2Service geoLite2Service = new GeoLite2Service();
+        return geoLite2Service.getLocation(request.getRemoteAddr());
     }
 }
