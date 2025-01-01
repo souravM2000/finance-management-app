@@ -5,6 +5,7 @@ import com.kshirsa.coreservice.BaseController;
 import com.kshirsa.coreservice.SuccessResponse;
 import com.kshirsa.coreservice.exception.CustomException;
 import com.kshirsa.userservice.dto.request.SignUpRequest;
+import com.kshirsa.userservice.dto.response.UserResponse;
 import com.kshirsa.userservice.entity.UserDetails;
 import com.kshirsa.userservice.service.declaration.UserDetailsService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -30,13 +31,13 @@ public class UserDetailsController extends BaseController {
 
     @Operation(summary = "Update user Details")
     @PutMapping("/update/details")
-    public ResponseEntity<SuccessResponse<UserDetails>> otpValidate(@RequestBody SignUpRequest request) throws CustomException {
+    public ResponseEntity<SuccessResponse<UserResponse>> otpValidate(@RequestBody SignUpRequest request) throws CustomException {
         return ok(userDetailsService.updateUserDetails(request), env.getProperty("USER.DATA.UPDATED"));
     }
 
     @Operation(summary = "Get user Details")
     @GetMapping("/get/details")
-    public ResponseEntity<SuccessResponse<UserDetails>> getDetails() throws CustomException {
+    public ResponseEntity<SuccessResponse<UserResponse>> getDetails() throws CustomException {
         return ok(userDetailsService.getUserDetails(), env.getProperty("USER.DATA.RETRIEVED"));
     }
 

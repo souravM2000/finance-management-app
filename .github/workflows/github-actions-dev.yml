@@ -1,6 +1,7 @@
-name: Spring Boot CI/CD
+name: Spring Boot CI/CD Dev
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - dev
@@ -13,13 +14,8 @@ jobs:
       # Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v3
-
-      # Set up Git LFS
-      - name: Install Git LFS
-        run: git lfs install
-
-      - name: Fetch LFS files
-        run: git lfs pull
+        with:
+          lfs: true
 
       # Set up JDK
       - name: Set up JDK
@@ -55,7 +51,6 @@ jobs:
           push: true
           tags: |
             ${{ secrets.DOCKER_HUB_USERNAME }}/kshirsa:latest
-            ${{ secrets.DOCKER_HUB_USERNAME }}/kshirsa:${{ github.sha }}
 
       # Trigger Render Deployment
       - name: Trigger Render Deployment

@@ -3,6 +3,7 @@ package com.kshirsa.userservice.service.impl;
 import com.kshirsa.coreservice.exception.CustomException;
 import com.kshirsa.coreservice.exception.ErrorCode;
 import com.kshirsa.userservice.dto.request.SignUpRequest;
+import com.kshirsa.userservice.dto.response.UserResponse;
 import com.kshirsa.userservice.entity.UserDetails;
 import com.kshirsa.userservice.repository.UserDetailsRepository;
 import com.kshirsa.userservice.service.declaration.UserDetailsService;
@@ -29,7 +30,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails updateUserDetails(SignUpRequest request) throws CustomException {
+    public UserResponse updateUserDetails(SignUpRequest request) throws CustomException {
         UserDetails user = userRepository.findById(getUser()).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.name()));
         user.setName(request.name());
         user.setPhoneNumber(request.phoneNumber());
@@ -37,11 +38,21 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         user.setCountry(request.country());
         user.setGender(request.gender());
         user.setDob(request.dob());
-        return userRepository.save(user);
+        user=userRepository.save(user);
+        return new UserResponse(user,isSignupFlowCompleted(user));
     }
 
     @Override
-    public UserDetails getUserDetails() throws CustomException {
-        return userRepository.findById(getUser()).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.name()));
+    public UserResponse getUserDetails() throws CustomException {
+        UserDetails user = userRepository.findById(getUser()).orElseThrow(() -> new CustomException(ErrorCode.USER_NOT_FOUND.name()));
+        return new UserResponse(user,isSignupFlowCompleted(user));
+    }
+
+    public Boolean isSignupFlowCompleted(UserDetails user) {
+        return user != null && user.getName() != null
+                && user.getPhoneNumber() != null
+                && user.getCountryCode() != null
+                && user.getGender() != null
+                && user.getDob() != null;
     }
 }

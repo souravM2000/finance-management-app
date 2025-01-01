@@ -5,18 +5,17 @@ import com.maxmind.geoip2.DatabaseReader;
 import com.maxmind.geoip2.model.CityResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.io.InputStream;
 import java.net.InetAddress;
 
 @Service
 @Slf4j
 public class GeoLite2Service {
 
-    String dbPath = "src/main/resources/geolite2/GeoLite2-City.mmdb";
-
-    public String getClientLocation(HttpServletRequest request) {
+    public LocationFromIpResponse getClientLocation(HttpServletRequest request) {
         String ip = request.getHeader(UserConstants.X_FORWARDED_FOR);
         if (ip == null || ip.isEmpty()) {
             ip = request.getRemoteAddr();
@@ -27,18 +26,19 @@ public class GeoLite2Service {
         return getLocation(ip);
     }
 
-    public String getLocation(String ip) {
+    public LocationFromIpResponse getLocation(String ip) {
         try {
-            File database = new File(dbPath);
-            DatabaseReader dbReader = new DatabaseReader.Builder(database).build();
+            ClassPathResource resource = new ClassPathResource("geolite2/GeoLite2-City.mmdb");
+            InputStream databaseStream = resource.getInputStream();
+            DatabaseReader dbReader = new DatabaseReader.Builder(databaseStream).build();
             InetAddress ipAddress = InetAddress.getByName(ip);
             CityResponse response = dbReader.city(ipAddress);
-            return (response.getCity().getName() + ", " + response.getCountry().getName());
+            return new LocationFromIpResponse((response.getCity().getName() + ", " + response.getCountry().getName()),ip);
 
         } catch (Exception e) {
             log.error("Error while fetching location from IP: {}", ip);
             log.error(e.getMessage(), e);
-            return "Unknown";
+            return new LocationFromIpResponse("Unknown", ip);
         }
     }
 }
