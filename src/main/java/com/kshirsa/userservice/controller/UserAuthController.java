@@ -38,6 +38,7 @@ public class UserAuthController extends BaseController {
     private final UserOtpService userOtpService;
     private final UserAuthService userAuthService;
     private final Environment env;
+    private final GeoLite2Service geoLite2Service;
 
     @Operation(summary = "Generate OTP for email validation for sign up & login")
     @GetMapping(path = "/otp")
@@ -76,7 +77,6 @@ public class UserAuthController extends BaseController {
     @Hidden
     @GetMapping("/getIp")
     public LocationFromIpResponse test(HttpServletRequest request) {
-        GeoLite2Service geoLite2Service = new GeoLite2Service();
         return geoLite2Service.getLocation(request.getRemoteAddr());
     }
 }
