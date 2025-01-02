@@ -28,7 +28,8 @@ public class UserDetails {
     private String phoneNumber;
     private String countryCode;
     private String country;
-    private String gender;
+    @Enumerated(EnumType.STRING)
+    private Gender gender;
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
     @JsonIgnore
