@@ -71,7 +71,7 @@ public class UserAuthServiceImpl implements UserAuthService {
 
     @Override
     public NewTokenResponse refreshToken(String token, String deviceId) throws CustomException {
-        Integer userid = refreshTokenService.tokenValidation(token,deviceId);
+        String userid = refreshTokenService.tokenValidation(token,deviceId);
         return new NewTokenResponse(jwtHelper.generateToken(userid),
                 refreshTokenService.extendTokenTime(token));
     }

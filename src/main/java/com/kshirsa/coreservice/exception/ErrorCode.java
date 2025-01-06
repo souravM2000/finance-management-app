@@ -23,6 +23,8 @@ public enum ErrorCode {
     NOT_BLANK(400, 705, "This field cannot be blank or null."),
     DISPOSABLE_EMAIL(400, 707, "Disposable email addresses are not allowed."),
     INVALID_EMAIL_DOMAIN(400, 708, "The email domain is invalid."),
+    INVALID_CATEGORY(400, 709, "The provided category id is invalid."),
+    WRONG_TRANSACTION_TYPE(400, 710, "The transaction type is not valid for this category."),
 
     // Business Logic and Entity Errors (8xx)
     EMAIL_ALREADY_EXISTS(422, 801, "Email ID is already in use. Please use a different email address."),
