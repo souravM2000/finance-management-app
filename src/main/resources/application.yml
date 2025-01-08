@@ -20,6 +20,12 @@ server:
     include-stacktrace: never
 
 ###############Swagger###################
+springdoc:
+  swagger-ui:
+    operations-sorter: alpha
+    tags-sorter: alpha
+
+############### Actuator ###################
 management:
   endpoints:
     web:

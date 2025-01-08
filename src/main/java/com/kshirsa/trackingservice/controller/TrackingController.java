@@ -20,17 +20,17 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = BaseConstants.ROOT_PATH +"/track/add", produces = "application/json")
 @Validated
 @RequiredArgsConstructor
-@Tag(name = "Tracking Controller", description = "APIs for money tracking")
+@Tag(name = "3. Tracking Controller", description = "APIs for money tracking")
 public class TrackingController {
 
     private final TrackingAddService trackingAddService;
 
-    @PostMapping("/add/category")
+    @PostMapping("/category")
     public Category addCategory(@RequestBody AddCategory category) {
         return trackingAddService.addCategory(category);
     }
 
-    @PostMapping("/add/transaction")
+    @PostMapping("/transaction")
     public Transactions addTransaction(@RequestBody @Valid AddTransaction transaction) throws CustomException {
         return trackingAddService.addTransaction(transaction);
     }

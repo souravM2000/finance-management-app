@@ -1,22 +1,31 @@
 package com.kshirsa.utility;
 
-import io.jsonwebtoken.io.Encoders;
-
-import java.net.Inet4Address;
-import java.time.Instant;
-import java.util.Random;
+import java.security.SecureRandom;
 import java.util.UUID;
 
 public class IdGenerator {
-    public static String generateId()  {
-        String machineId;
-        try {
-            machineId = String.valueOf(Inet4Address.getLocalHost().getAddress()[3]);
-        } catch (Exception e) {
-            machineId = "c";
+
+    public static final String ALPHABET = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    public static final SecureRandom RANDOM = new SecureRandom();
+
+    public static String generateUserId() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < 9; i++) {
+            sb.append(ALPHABET.charAt(RANDOM.nextInt(ALPHABET.length())));
         }
-        return ( UUID.randomUUID().toString().substring(1,6) + machineId +
-                Encoders.BASE64URL.encode(String.valueOf(Instant.now().toEpochMilli()*Math.random()).getBytes()).substring(3,8) +
-                 new Random().nextInt(101,9999) );
+        return ("U" + sb);
     }
+
+    public static String generateTransactionId() {
+        return "T" + UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    public static String generateCategoryId() {
+        return "C" + UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
+    public static String generateLoanId() {
+        return "L" + UUID.randomUUID().toString().replaceAll("-", "");
+    }
+
 }

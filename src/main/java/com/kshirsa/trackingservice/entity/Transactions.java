@@ -1,7 +1,9 @@
 package com.kshirsa.trackingservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.kshirsa.trackingservice.dto.request.AddTransaction;
 import com.kshirsa.userservice.entity.UserDetails;
+import com.kshirsa.utility.IdGenerator;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,7 +15,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 import org.hibernate.type.SqlTypes;
 
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -23,7 +25,6 @@ import java.util.List;
 public class Transactions {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String transactionId;
     private Integer amount;
     @Enumerated(EnumType.STRING)
@@ -40,14 +41,30 @@ public class Transactions {
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
-    @OneToOne(mappedBy = "transaction")
+    @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, orphanRemoval = true)
     private LoanDetails loanDetails;
     @JdbcTypeCode(SqlTypes.JSON)
     @Column(columnDefinition = "jsonb")
-    private List<String> tags;
+    private Set<String> tags;
     @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private UserDetails userDetails;
+
+
+    public static Transactions transactionsDtoToEntity(AddTransaction transaction, Category category, UserDetails userDetails) {
+        Transactions transactions = new Transactions();
+        transactions.setTransactionId(IdGenerator.generateTransactionId());
+        transactions.setAmount(transaction.getAmount());
+        transactions.setPaymentMode(transaction.getPaymentMode());
+        transactions.setNote(transaction.getNote());
+        transactions.setTransactionType(transaction.getTransactionType());
+        transactions.setTransactionTime(transaction.getTransactionTime());
+        transactions.setIsRecurring(transaction.getIsRecurring());
+        transactions.setTags(transaction.getTags());
+        transactions.setCategory(category);
+        transactions.setUserDetails(userDetails);
+        return transactions;
+    }
 }
 

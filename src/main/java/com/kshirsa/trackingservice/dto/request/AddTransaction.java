@@ -2,12 +2,13 @@ package com.kshirsa.trackingservice.dto.request;
 
 import com.kshirsa.trackingservice.entity.PaymentMode;
 import com.kshirsa.trackingservice.entity.TransactionType;
+import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
+import java.util.Set;
 
 @Data
 public class AddTransaction {
@@ -26,6 +27,7 @@ public class AddTransaction {
     @NotNull
     private String categoryId;
     private Boolean isRecurring;
-    private List<String> tagIds;
+    private Set<String> tags;
+    @Nullable
     private AddLoanDetails loanDetails;
 }

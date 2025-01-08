@@ -28,6 +28,7 @@ public enum ErrorCode {
 
     // Business Logic and Entity Errors (8xx)
     EMAIL_ALREADY_EXISTS(422, 801, "Email ID is already in use. Please use a different email address."),
+    LOAN_DETAILS_REQUIRED(400, 802, "Loan details are required for a loan transaction."),
 
     // Server or General Errors (9xx)
     GENERAL_EXCEPTION(500, 901, "An unexpected error occurred. Please try again later.");

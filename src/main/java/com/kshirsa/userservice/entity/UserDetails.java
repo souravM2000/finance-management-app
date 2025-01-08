@@ -41,7 +41,7 @@ public class UserDetails {
     private LocalDateTime createdOn;
 
     public UserDetails(String userEmail,LocalDateTime createdOn, String deviceId){
-        this.userId = IdGenerator.generateId();
+        this.userId = IdGenerator.generateUserId();
         this.userEmail=userEmail;
         this.createdOn=createdOn;
         this.loggedInDevices = List.of(deviceId);
