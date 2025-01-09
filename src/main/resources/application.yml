@@ -8,8 +8,8 @@ spring:
       mode: always
   jpa:
     defer-datasource-initialization: true
-    open-in-view: false
 
+#    open-in-view: false
 server:
   servlet:
     context-path: /kshirsa

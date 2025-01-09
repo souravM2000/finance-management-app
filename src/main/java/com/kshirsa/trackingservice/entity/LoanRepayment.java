@@ -1,8 +1,9 @@
 package com.kshirsa.trackingservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.Data;
-import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 
 @Data
@@ -12,7 +13,7 @@ public class LoanRepayment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String loanRepaymentId;
-    @CreationTimestamp
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDateTime paymentDate;
     private Integer amount;
     private String note;

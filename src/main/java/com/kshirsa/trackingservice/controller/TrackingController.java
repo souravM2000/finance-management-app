@@ -7,6 +7,7 @@ import com.kshirsa.trackingservice.dto.request.AddTransaction;
 import com.kshirsa.trackingservice.entity.Category;
 import com.kshirsa.trackingservice.entity.Transactions;
 import com.kshirsa.trackingservice.service.declaration.TrackingAddService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping(value = BaseConstants.ROOT_PATH +"/track/add", produces = "application/json")
 @Validated
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "3. Tracking Controller", description = "APIs for money tracking")
 public class TrackingController {
 

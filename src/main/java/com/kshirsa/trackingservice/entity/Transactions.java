@@ -1,5 +1,6 @@
 package com.kshirsa.trackingservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kshirsa.trackingservice.dto.request.AddTransaction;
 import com.kshirsa.userservice.entity.UserDetails;
@@ -10,10 +11,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Set;
 
@@ -32,19 +32,21 @@ public class Transactions {
     private String note;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime transactionTime;
     private Boolean isRecurring;
     @CreationTimestamp
-    private LocalDateTime createdOn;
+    @Column(updatable =false)
+    private Instant createdOn;
     @UpdateTimestamp
-    private LocalDateTime updatedOn;
+    private Instant updatedOn;
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
     @OneToOne(mappedBy = "transaction", cascade = CascadeType.ALL, orphanRemoval = true)
     private LoanDetails loanDetails;
-    @JdbcTypeCode(SqlTypes.JSON)
-    @Column(columnDefinition = "jsonb")
+    @ElementCollection()
+    @CollectionTable(name = "transaction_tags", joinColumns = @JoinColumn(name = "transaction_id"))
     private Set<String> tags;
     @ManyToOne
     @JoinColumn(name = "user_id")

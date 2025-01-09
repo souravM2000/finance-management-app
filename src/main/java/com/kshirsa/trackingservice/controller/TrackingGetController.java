@@ -5,6 +5,7 @@ import com.kshirsa.trackingservice.entity.Category;
 import com.kshirsa.trackingservice.entity.TransactionType;
 import com.kshirsa.trackingservice.entity.Transactions;
 import com.kshirsa.trackingservice.service.declaration.TrackingGetService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +19,7 @@ import java.util.List;
 @RequestMapping(value = BaseConstants.ROOT_PATH +"/track/get", produces = "application/json")
 @Validated
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
 @Tag(name = "4. Tracking Get Controller", description = "APIs for getting money tracking data")
 public class TrackingGetController {
 
@@ -29,7 +31,7 @@ public class TrackingGetController {
     }
 
     @GetMapping("/v1/transaction")
-    public List<Transactions> addRecentTransaction() {
+    public List<Transactions> getRecentTransaction() {
         return trackingGetService.getRecentTransaction();
     }
 }

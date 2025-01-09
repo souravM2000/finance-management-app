@@ -14,10 +14,8 @@ import com.kshirsa.trackingservice.repository.TransactionRepo;
 import com.kshirsa.trackingservice.service.declaration.TrackingAddService;
 import com.kshirsa.userservice.entity.UserDetails;
 import com.kshirsa.userservice.service.declaration.UserDetailsService;
-import com.kshirsa.utility.IdGenerator;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,15 +24,13 @@ import org.springframework.stereotype.Service;
 public class TrackingAddServiceImpl implements TrackingAddService {
 
     private final CategoryRepo categoryRepo;
-    private final ModelMapper modelMapper;
     private final UserDetailsService userDetailsService;
     private final TransactionRepo transactionRepo;
     private final LoanDetailsRepo loanDetailsRepo;
 
     @Override
     public Category addCategory(AddCategory categoryReq) {
-        Category category = modelMapper.map(categoryReq, Category.class);
-        category.setCategoryId(IdGenerator.generateCategoryId());
+        Category category = new Category(categoryReq);
         category.setCreatedBy(userDetailsService.getUser());
         return categoryRepo.save(category);
     }
