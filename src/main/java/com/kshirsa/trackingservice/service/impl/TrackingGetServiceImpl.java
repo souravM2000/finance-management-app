@@ -1,10 +1,11 @@
 package com.kshirsa.trackingservice.service.impl;
 
 import com.kshirsa.trackingservice.entity.Category;
+import com.kshirsa.trackingservice.entity.HashTags;
 import com.kshirsa.trackingservice.entity.TransactionType;
 import com.kshirsa.trackingservice.entity.Transactions;
 import com.kshirsa.trackingservice.repository.CategoryRepo;
-import com.kshirsa.trackingservice.repository.LoanDetailsRepo;
+import com.kshirsa.trackingservice.repository.HashTagRepo;
 import com.kshirsa.trackingservice.repository.TransactionRepo;
 import com.kshirsa.trackingservice.service.declaration.TrackingGetService;
 import com.kshirsa.userservice.service.declaration.UserDetailsService;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -22,7 +24,7 @@ public class TrackingGetServiceImpl implements TrackingGetService {
     private final CategoryRepo categoryRepo;
     private final UserDetailsService userDetailsService;
     private final TransactionRepo transactionRepo;
-    private final LoanDetailsRepo loanDetailsRepo;
+    private final HashTagRepo hashTagRepo;
 
     @Override
     public List<Transactions> getRecentTransaction() {
@@ -33,5 +35,10 @@ public class TrackingGetServiceImpl implements TrackingGetService {
     @Override
     public List<Category> getCategory(TransactionType type) {
         return categoryRepo.getAllCategory(userDetailsService.getUser(), type.name());
+    }
+
+    @Override
+    public Set<HashTags> getHashTags() {
+        return hashTagRepo.findHashTagsByUserId(userDetailsService.getUser());
     }
 }
