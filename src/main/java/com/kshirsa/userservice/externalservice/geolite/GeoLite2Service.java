@@ -24,13 +24,22 @@ public class GeoLite2Service {
 
 
     public LocationFromIpResponse getClientLocation(HttpServletRequest request) {
-        String ip = request.getHeader(UserConstants.X_FORWARDED_FOR);
+        String ip = request.getHeader(UserConstants.CF_CONNECTING_IP);  // Cloudflare-specific headers
+
         if (ip == null || ip.isEmpty()) {
-            ip = request.getRemoteAddr();
-        } else {
-            // In case of multiple proxies, the first one is the real client IP
-            ip = ip.split(",")[0];
+            ip = request.getHeader(UserConstants.TRUE_CLIENT_IP);       // Cloudflare-specific headers
         }
+
+        if (ip == null || ip.isEmpty()) {
+            ip = request.getHeader(UserConstants.X_FORWARDED_FOR);      // Check for X-Forwarded-For
+        }
+
+        if (ip == null || ip.isEmpty()) {
+            ip = request.getRemoteAddr();                               // If no headers, fall back to getRemoteAddr()
+        } else {
+            ip = ip.split(",")[0].trim();                         // In case of multiple proxies, the first one is the real client IP
+        }
+
         return getLocation(ip);
     }
 

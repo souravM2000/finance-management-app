@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RequiredArgsConstructor
 @SecurityRequirement(name = "Bearer Authentication")
-@Tag(name = "3. Tracking Controller", description = "APIs for money tracking")
+@Tag(name = "3. Tracking Add Controller", description = "APIs for money tracking")
 public class TrackingController {
 
     private final TrackingAddService trackingAddService;
