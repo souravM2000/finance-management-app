@@ -5,6 +5,7 @@ import com.kshirsa.coreservice.exception.ErrorCode;
 import com.kshirsa.trackingservice.dto.request.AddCategory;
 import com.kshirsa.trackingservice.dto.request.AddTransaction;
 import com.kshirsa.trackingservice.entity.*;
+import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.trackingservice.repository.CategoryRepo;
 import com.kshirsa.trackingservice.repository.HashTagRepo;
 import com.kshirsa.trackingservice.repository.LoanDetailsRepo;

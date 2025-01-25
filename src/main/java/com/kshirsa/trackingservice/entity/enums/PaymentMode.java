@@ -1,4 +1,4 @@
-package com.kshirsa.trackingservice.entity;
+package com.kshirsa.trackingservice.entity.enums;
 
 public enum PaymentMode {
     CASH,

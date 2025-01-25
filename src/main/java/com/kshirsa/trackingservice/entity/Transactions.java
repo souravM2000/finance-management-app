@@ -3,6 +3,8 @@ package com.kshirsa.trackingservice.entity;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kshirsa.trackingservice.dto.request.AddTransaction;
+import com.kshirsa.trackingservice.entity.enums.PaymentMode;
+import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.userservice.entity.UserDetails;
 import com.kshirsa.utility.IdGenerator;
 import jakarta.persistence.*;
@@ -26,7 +28,7 @@ public class Transactions {
 
     @Id
     private String transactionId;
-    private Integer amount;
+    private Double amount;
     @Enumerated(EnumType.STRING)
     private PaymentMode paymentMode;
     private String note;

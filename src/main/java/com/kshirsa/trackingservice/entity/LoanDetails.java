@@ -17,12 +17,13 @@ public class LoanDetails {
     @Id
     private String loanId;
     private LocalDate expectedPaymentDate;
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @OneToOne()
     @JoinColumn(name = "transaction")
     private Transactions transaction;
     private String transactingParty;
-    private Integer paidAmount;
-    private Integer outstandingAmount;
+    private Double paidAmount;
+    private Double outstandingAmount;
     private Boolean isSettled;
     @OneToMany(mappedBy = "loanDetails", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LoanRepayment> loanRepayments;

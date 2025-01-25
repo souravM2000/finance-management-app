@@ -1,8 +1,8 @@
 package com.kshirsa.trackingservice.dto.request;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.kshirsa.trackingservice.entity.PaymentMode;
-import com.kshirsa.trackingservice.entity.TransactionType;
+import com.kshirsa.trackingservice.entity.enums.PaymentMode;
+import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -18,7 +18,7 @@ public class AddTransaction {
                                  String transactingParty) {}
 
     @NotNull
-    private Integer amount;
+    private Double amount;
     @NotNull
     private PaymentMode paymentMode;
     private String note;

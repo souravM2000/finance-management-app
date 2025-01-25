@@ -15,8 +15,9 @@ public class LoanRepayment {
     private String loanRepaymentId;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")
     private LocalDateTime paymentDate;
-    private Integer amount;
+    private Double amount;
     private String note;
+    @SuppressWarnings("JpaDataSourceORMInspection")
     @ManyToOne
     @JoinColumn(name = "loan_id")
     private LoanDetails loanDetails;

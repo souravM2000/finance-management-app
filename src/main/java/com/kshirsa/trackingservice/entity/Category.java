@@ -1,6 +1,7 @@
 package com.kshirsa.trackingservice.entity;
 
 import com.kshirsa.trackingservice.dto.request.AddCategory;
+import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.utility.IdGenerator;
 import jakarta.persistence.*;
 import lombok.Data;
