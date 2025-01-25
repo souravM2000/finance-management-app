@@ -53,12 +53,12 @@ public class JwtHelper {
         return (!isTokenExpired(token));
     }
 
-    public String generateToken(Integer userId) {
+    public String generateToken(String userId) {
         Map<String, Object> claims = new HashMap<>();
         UserDetails user = userDetailsRepository.findById(userId).orElseThrow();
         claims.put("Name", user.getName());
         claims.put("User Email", user.getUserEmail());
-        return createToken(claims, userId.toString());
+        return createToken(claims, userId);
     }
 
     private String createToken(Map<String, Object> claims, String userId) {

@@ -32,7 +32,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping(path = BaseConstants.ROOT_PATH + "/auth", produces = "application/json")
 @RequiredArgsConstructor
 @Validated
-@Tag(name = "User Public Controller", description = "Public endpoints for user signup, login, email validation")
+@Tag(name = "1. User Public Controller", description = "Public endpoints for user signup, login, email validation")
 public class UserAuthController extends BaseController {
 
     private final UserOtpService userOtpService;
