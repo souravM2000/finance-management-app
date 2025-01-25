@@ -36,6 +36,7 @@ public class TrackingGetController {
         return trackingGetService.getCategory(type);
     }
 
+    @Operation(summary = "Get a transaction by id")
     @GetMapping("transaction/{transactionId}")
     public Transactions getTransaction(@PathVariable String transactionId) throws CustomException {
         return trackingGetService.getSingleTransaction(transactionId);
