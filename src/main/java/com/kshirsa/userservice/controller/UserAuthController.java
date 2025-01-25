@@ -28,6 +28,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Collections;
+import java.util.Enumeration;
+
 @RestController
 @RequestMapping(path = BaseConstants.ROOT_PATH + "/auth", produces = "application/json")
 @RequiredArgsConstructor
@@ -78,5 +81,24 @@ public class UserAuthController extends BaseController {
     @GetMapping("/getIp")
     public LocationFromIpResponse test(HttpServletRequest request) {
         return geoLite2Service.getLocation(request.getRemoteAddr());
+    }
+
+    @GetMapping("/print-all-headers")
+    public String printAllHeaders(HttpServletRequest request) {
+        StringBuilder headersInfo = new StringBuilder("All Headers and Their Values:\n");
+
+        // Get all header names
+        Enumeration<String> headerNames = request.getHeaderNames();
+
+        // Iterate through the header names and fetch their corresponding values
+        while (headerNames.hasMoreElements()) {
+            String headerName = headerNames.nextElement();
+            // Get all values for the current header name (in case of multiple values)
+            java.util.List<String> headerValues = Collections.list(request.getHeaders(headerName));
+
+            headersInfo.append(headerName).append(": ").append(String.join(", ", headerValues)).append("\n");
+        }
+
+        return headersInfo.toString();
     }
 }
