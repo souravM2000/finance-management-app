@@ -5,6 +5,7 @@ import com.kshirsa.coreservice.BaseConstants;
 import com.kshirsa.coreservice.exception.CustomException;
 import com.kshirsa.trackingservice.dto.TrackingFilter;
 import com.kshirsa.trackingservice.dto.response.TrackingFilterRes;
+import com.kshirsa.trackingservice.dto.response.ViewTransaction;
 import com.kshirsa.trackingservice.entity.Category;
 import com.kshirsa.trackingservice.entity.Transactions;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
@@ -44,17 +45,17 @@ public class TrackingGetController {
 
     @Operation(summary = "Get last 10 transactions")
     @GetMapping("/transaction/recent")
-    public List<Transactions> getRecentTransaction() {
+    public List<ViewTransaction> getRecentTransaction() {
         return trackingGetService.getRecentTransaction();
     }
 
     @Operation(summary = "Get transactions based on filters")
     @Parameter(name = "sortBy", description = "Sort results by 'Latest', 'Oldest', 'AmountHighToLow', 'AmountLowToHigh'")
     @GetMapping("/transaction")
-    public List<Transactions> getTransactions(@ParameterObject @ModelAttribute TrackingFilter filter,
-                                              @RequestParam(required = false, defaultValue = "1") Integer pageNumber,
-                                              @RequestParam(required = false, defaultValue = "6") Integer transactionPerPage,
-                                              @RequestParam(required = false, defaultValue = "Latest") String sortBy) {
+    public List<ViewTransaction> getTransactions(@ParameterObject @ModelAttribute TrackingFilter filter,
+                                                 @RequestParam(required = false, defaultValue = "1") Integer pageNumber,
+                                                 @RequestParam(required = false, defaultValue = "6") Integer transactionPerPage,
+                                                 @RequestParam(required = false, defaultValue = "Latest") String sortBy) {
         return trackingGetService.getTransaction(filter,pageNumber,transactionPerPage,sortBy);
     }
 
