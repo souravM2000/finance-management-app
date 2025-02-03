@@ -45,6 +45,7 @@ public class TrackingAddServiceImpl implements TrackingAddService {
         if (!category.getTransactionType().equals(transactionDto.getTransactionType()))
             throw new CustomException(ErrorCode.WRONG_TRANSACTION_TYPE.name());                    // Checking Transaction Type selected valid or not
 
+
         UserDetails userDetails = new UserDetails(userDetailsService.getUser());                    // Getting User Details.(Not from db as it's already validated via jwt)
 
         Transactions transaction = transactionRepo

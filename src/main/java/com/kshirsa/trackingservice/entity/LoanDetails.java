@@ -24,7 +24,7 @@ public class LoanDetails {
     private String transactingParty;
     private Double paidAmount;
     private Double outstandingAmount;
-    private Boolean isSettled;
+    private Boolean isSettled=false;
     @OneToMany(mappedBy = "loanDetails", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<LoanRepayment> loanRepayments;
 
@@ -33,6 +33,7 @@ public class LoanDetails {
         this.expectedPaymentDate = loanDetails.expectedPaymentDate();
         this.transactingParty = loanDetails.transactingParty();
         this.outstandingAmount = transaction.getAmount();
+        this.paidAmount = 0.0;
         this.transaction = transaction;
     }
 }
