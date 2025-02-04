@@ -6,6 +6,7 @@ import com.kshirsa.coreservice.exception.CustomException;
 import com.kshirsa.coreservice.exception.ErrorCode;
 import com.kshirsa.trackingservice.dto.TrackingFilter;
 import com.kshirsa.trackingservice.dto.response.TrackingFilterRes;
+import com.kshirsa.trackingservice.dto.response.ViewTransaction;
 import com.kshirsa.trackingservice.entity.Category;
 import com.kshirsa.trackingservice.entity.Transactions;
 import com.kshirsa.trackingservice.entity.enums.PaymentMode;
@@ -45,13 +46,16 @@ public class TrackingGetServiceImpl implements TrackingGetService {
     }
 
     @Override
-    public List<Transactions> getRecentTransaction() {
+    public List<ViewTransaction> getRecentTransaction() {
         Pageable pageable = PageRequest.of(0, 10);
-        return transactionRepo.findAllByUserDetails_UserId(userDetailsService.getUser(), pageable);
+        List<Transactions> transactionsList = transactionRepo.findAllByUserDetails_UserId(userDetailsService.getUser(), pageable);
+        if (transactionsList != null)
+            return transactionsList.stream().map(TrackingGetServiceImpl::convertToViewTransaction).toList();
+        return null;
     }
 
     @Override
-    public List<Transactions> getTransaction(TrackingFilter filter, Integer pageNumber, Integer transactionPerPage, String sortBy) {
+    public List<ViewTransaction> getTransaction(TrackingFilter filter, Integer pageNumber, Integer transactionPerPage, String sortBy) {
 
         List<Transactions> transactions = null;
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, transactionPerPage);
@@ -87,8 +91,10 @@ public class TrackingGetServiceImpl implements TrackingGetService {
                     pageRequest.withSort(SortBy.AmountLowToHigh.getSortDirection(), SortBy.AmountLowToHigh.getSortBy()));
 
         }
+        if (transactions != null)
+            return transactions.stream().map(TrackingGetServiceImpl::convertToViewTransaction).toList();
 
-        return transactions;
+        return null;
     }
 
     @Override
@@ -106,6 +112,15 @@ public class TrackingGetServiceImpl implements TrackingGetService {
 
     @Override
     public Transactions getSingleTransaction(String transactionId) throws CustomException {
-        return transactionRepo.findById(transactionId).orElseThrow(()-> new CustomException(ErrorCode.INVALID_TRANSACTION_ID.name()));
+        return transactionRepo.findById(transactionId).orElseThrow(() -> new CustomException(ErrorCode.INVALID_TRANSACTION_ID.name()));
+    }
+
+    public static ViewTransaction convertToViewTransaction(Transactions transaction) {
+        return new ViewTransaction(
+                transaction.getTransactionId(), transaction.getAmount(), transaction.getPaymentMode(),
+                transaction.getNote(), transaction.getTransactionType(), transaction.getTransactionTime(),
+                transaction.getCategory().getCategoryName(), transaction.getTags(),
+                transaction.getLoanDetails() != null ? transaction.getLoanDetails().getIsSettled() : null,
+                transaction.getLoanDetails() != null ? transaction.getLoanDetails().getOutstandingAmount() : null);
     }
 }

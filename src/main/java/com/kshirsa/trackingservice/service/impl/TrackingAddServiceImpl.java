@@ -3,13 +3,11 @@ package com.kshirsa.trackingservice.service.impl;
 import com.kshirsa.coreservice.exception.CustomException;
 import com.kshirsa.coreservice.exception.ErrorCode;
 import com.kshirsa.trackingservice.dto.request.AddCategory;
+import com.kshirsa.trackingservice.dto.request.AddLoanRepayment;
 import com.kshirsa.trackingservice.dto.request.AddTransaction;
 import com.kshirsa.trackingservice.entity.*;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
-import com.kshirsa.trackingservice.repository.CategoryRepo;
-import com.kshirsa.trackingservice.repository.HashTagRepo;
-import com.kshirsa.trackingservice.repository.LoanDetailsRepo;
-import com.kshirsa.trackingservice.repository.TransactionRepo;
+import com.kshirsa.trackingservice.repository.*;
 import com.kshirsa.trackingservice.service.declaration.TrackingAddService;
 import com.kshirsa.userservice.entity.UserDetails;
 import com.kshirsa.userservice.service.declaration.UserDetailsService;
@@ -29,6 +27,7 @@ public class TrackingAddServiceImpl implements TrackingAddService {
     private final TransactionRepo transactionRepo;
     private final LoanDetailsRepo loanDetailsRepo;
     private final HashTagRepo hashTagRepo;
+    private final LoanRepaymentRepo loanRepaymentRepo;
 
     @Override
     public Category addCategory(AddCategory categoryReq) {
@@ -44,6 +43,7 @@ public class TrackingAddServiceImpl implements TrackingAddService {
                 .orElseThrow(() -> new CustomException(ErrorCode.INVALID_CATEGORY.name()));        // Checking Category selected valid or not
         if (!category.getTransactionType().equals(transactionDto.getTransactionType()))
             throw new CustomException(ErrorCode.WRONG_TRANSACTION_TYPE.name());                    // Checking Transaction Type selected valid or not
+
 
         UserDetails userDetails = new UserDetails(userDetailsService.getUser());                    // Getting User Details.(Not from db as it's already validated via jwt)
 
@@ -68,5 +68,28 @@ public class TrackingAddServiceImpl implements TrackingAddService {
         }
 
         return transaction;
+    }
+
+    @Override
+    public LoanRepayment addLoanRepayment(AddLoanRepayment loanRepaymentDto) throws CustomException {
+        LoanDetails loanDetails = loanDetailsRepo.findByTransaction_TransactionId(loanRepaymentDto.transactionId())
+                .orElseThrow(() -> new CustomException(ErrorCode.NO_LOAN_DETAILS.name()));             // Checking if Loan Details are present
+
+        LoanRepayment loanRepayment = new LoanRepayment();
+        loanRepayment.setLoanDetails(loanDetails);
+        loanRepayment.setAmount(loanRepaymentDto.amount());
+        loanRepayment.setPaymentDate(loanRepaymentDto.paymentDate());
+        loanRepayment.setNote(loanRepaymentDto.note());
+
+        loanRepayment = loanRepaymentRepo.save(loanRepayment);                                          // Saving Loan Repayment
+
+        loanDetails.setPaidAmount(loanDetails.getPaidAmount() + loanRepayment.getAmount());             // Updating Paid amount Details
+        loanDetails.setOutstandingAmount(loanDetails.getTransaction().getAmount() - loanDetails.getPaidAmount());   // Updating outstanding amount Details
+        if (loanDetails.getOutstandingAmount() <= 0)
+            loanDetails.setIsSettled(true);
+
+        loanRepayment.setLoanDetails(loanDetailsRepo.save(loanDetails));                                // Saving updated Loan Details & add that in response
+
+        return loanRepayment;
     }
 }
