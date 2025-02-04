@@ -30,6 +30,7 @@ public enum ErrorCode {
     EMAIL_ALREADY_EXISTS(422, 801, "Email ID is already in use. Please use a different email address."),
     LOAN_DETAILS_REQUIRED(400, 802, "Loan details are required for a loan transaction."),
     WRONG_TRANSACTION_TYPE(400, 803, "The transaction type is not valid for this category."),
+    NO_LOAN_DETAILS(400, 804, "No loan details found for this transaction."),
 
     // Server or General Errors (9xx)
     GENERAL_EXCEPTION(500, 901, "An unexpected error occurred. Please try again later.");

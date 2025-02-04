@@ -3,6 +3,7 @@ package com.kshirsa.trackingservice.controller;
 import com.kshirsa.coreservice.BaseConstants;
 import com.kshirsa.coreservice.exception.CustomException;
 import com.kshirsa.trackingservice.dto.request.AddCategory;
+import com.kshirsa.trackingservice.dto.request.AddLoanRepayment;
 import com.kshirsa.trackingservice.dto.request.AddTransaction;
 import com.kshirsa.trackingservice.entity.Category;
 import com.kshirsa.trackingservice.entity.Transactions;
@@ -35,5 +36,10 @@ public class TrackingAddController {
     @PostMapping("/transaction")
     public Transactions addTransaction(@RequestBody @Valid AddTransaction transaction) throws CustomException {
         return trackingAddService.addTransaction(transaction);
+    }
+
+    @PostMapping("/loanRepayment")
+    public void addLoanRepayment(@RequestBody @Valid AddLoanRepayment loanRepayment) throws CustomException {
+        trackingAddService.addLoanRepayment(loanRepayment);
     }
 }
