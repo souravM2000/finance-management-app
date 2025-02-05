@@ -31,6 +31,7 @@ public enum ErrorCode {
     LOAN_DETAILS_REQUIRED(400, 802, "Loan details are required for a loan transaction."),
     WRONG_TRANSACTION_TYPE(400, 803, "The transaction type is not valid for this category."),
     NO_LOAN_DETAILS(400, 804, "No loan details found for this transaction."),
+    INVALID_LOAN_REPAYMENT_ID(400, 805, "The provided loan repayment ID is not valid."),
 
     // Server or General Errors (9xx)
     GENERAL_EXCEPTION(500, 901, "An unexpected error occurred. Please try again later.");
