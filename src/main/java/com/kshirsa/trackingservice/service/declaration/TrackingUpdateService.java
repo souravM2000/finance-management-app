@@ -7,6 +7,7 @@ import com.kshirsa.trackingservice.dto.request.UpdateTransaction;
 import com.kshirsa.trackingservice.entity.Category;
 import com.kshirsa.trackingservice.entity.LoanRepayment;
 import com.kshirsa.trackingservice.entity.Transactions;
+import org.springframework.scheduling.annotation.Async;
 
 public interface TrackingUpdateService {
     Category updateCategory(UpdateCategory category) throws CustomException;
@@ -14,4 +15,7 @@ public interface TrackingUpdateService {
     Transactions updateTransaction(UpdateTransaction updateTransaction) throws CustomException;
 
     LoanRepayment updateLoanRepayment(UpdateLoanRepayment updateLoanRepayment) throws CustomException;
+
+    @Async
+    void updateHashTags();
 }

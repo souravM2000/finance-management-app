@@ -14,10 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping(value = BaseConstants.ROOT_PATH + "/track/add", produces = "application/json")
@@ -33,6 +30,13 @@ public class TrackingAddController {
     @PostMapping("/category")
     public Category addCategory(@RequestBody AddCategory category) {
         return trackingAddService.addCategory(category);
+    }
+
+    @Operation(summary = "Add a new hash tag")
+    @PostMapping("/hash-tag")
+    public String addHashTag(@RequestParam String transactionId,
+                             @RequestParam String hashTag) throws CustomException {
+        return trackingAddService.addHashTag(transactionId, hashTag);
     }
 
     @Operation(summary = "Add a new transaction")

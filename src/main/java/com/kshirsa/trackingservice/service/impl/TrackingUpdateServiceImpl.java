@@ -5,18 +5,14 @@ import com.kshirsa.coreservice.exception.ErrorCode;
 import com.kshirsa.trackingservice.dto.request.UpdateCategory;
 import com.kshirsa.trackingservice.dto.request.UpdateLoanRepayment;
 import com.kshirsa.trackingservice.dto.request.UpdateTransaction;
-import com.kshirsa.trackingservice.entity.Category;
-import com.kshirsa.trackingservice.entity.LoanDetails;
-import com.kshirsa.trackingservice.entity.LoanRepayment;
-import com.kshirsa.trackingservice.entity.Transactions;
+import com.kshirsa.trackingservice.entity.*;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
-import com.kshirsa.trackingservice.repository.CategoryRepo;
-import com.kshirsa.trackingservice.repository.LoanDetailsRepo;
-import com.kshirsa.trackingservice.repository.LoanRepaymentRepo;
-import com.kshirsa.trackingservice.repository.TransactionRepo;
+import com.kshirsa.trackingservice.repository.*;
 import com.kshirsa.trackingservice.service.declaration.TrackingUpdateService;
+import com.kshirsa.userservice.service.declaration.UserDetailsService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -28,6 +24,8 @@ public class TrackingUpdateServiceImpl implements TrackingUpdateService {
     private final TransactionRepo transactionRepo;
     private final LoanDetailsRepo loanDetailsRepo;
     private final LoanRepaymentRepo loanRepaymentRepo;
+    private final UserDetailsService userDetailsService;
+    private final HashTagRepo hashTagRepo;
 
     @Override
     public Category updateCategory(UpdateCategory categoryDto) throws CustomException {
@@ -89,5 +87,12 @@ public class TrackingUpdateServiceImpl implements TrackingUpdateService {
 
         loanDetailsRepo.save(loanRepayment.getLoanDetails());                                       // Saving Loan Details
         return loanRepaymentRepo.save(loanRepayment);                                               // Saving Loan Repayment
+    }
+
+    @Async
+    @Override
+    public void updateHashTags(){
+        String userId = userDetailsService.getUser();
+        hashTagRepo.save(new HashTags(userId,transactionRepo.findHashTagsByUserId(userId)));
     }
 }

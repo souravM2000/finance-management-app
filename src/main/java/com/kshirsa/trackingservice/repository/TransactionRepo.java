@@ -8,6 +8,7 @@ import org.springframework.data.repository.ListCrudRepository;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 public interface TransactionRepo extends ListCrudRepository<Transactions, String> {
 
@@ -30,4 +31,11 @@ public interface TransactionRepo extends ListCrudRepository<Transactions, String
     List<Transactions> findTransactions(String[] category, String[] paymentMode, String[] transactionType,
                                         Double amountMax, Double amountMin, LocalDateTime transactionAfter,
                                         LocalDateTime transactionBefore, String[] hashtags, String user, PageRequest pageRequest);
+
+    @Query(value = """
+                        SELECT DISTINCT tt.tags FROM transactions tr
+                        INNER JOIN transaction_tags tt ON t.transaction_id = tt.transaction_id
+                        WHERE tr.user_id = ?1
+            """, nativeQuery = true)
+    Set<String> findHashTagsByUserId(String userId);
 }
