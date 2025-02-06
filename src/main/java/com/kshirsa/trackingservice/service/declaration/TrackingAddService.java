@@ -13,6 +13,8 @@ public interface TrackingAddService {
 
     Category addCategory(AddCategory category);
 
+    String addHashTag(String transactionId, String hashTag) throws CustomException;
+
     Transactions addTransaction(@Valid AddTransaction transaction) throws CustomException;
 
     LoanRepayment addLoanRepayment(AddLoanRepayment loanRepaymentDto) throws CustomException;

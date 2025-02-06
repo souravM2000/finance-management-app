@@ -9,6 +9,7 @@ import com.kshirsa.trackingservice.entity.*;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.trackingservice.repository.*;
 import com.kshirsa.trackingservice.service.declaration.TrackingAddService;
+import com.kshirsa.trackingservice.service.declaration.TrackingUpdateService;
 import com.kshirsa.userservice.entity.UserDetails;
 import com.kshirsa.userservice.service.declaration.UserDetailsService;
 import jakarta.transaction.Transactional;
@@ -28,12 +29,23 @@ public class TrackingAddServiceImpl implements TrackingAddService {
     private final LoanDetailsRepo loanDetailsRepo;
     private final HashTagRepo hashTagRepo;
     private final LoanRepaymentRepo loanRepaymentRepo;
+    private final TrackingUpdateService trackingUpdateService;
 
     @Override
     public Category addCategory(AddCategory categoryReq) {
         Category category = new Category(categoryReq);
         category.setCreatedBy(userDetailsService.getUser());
         return categoryRepo.save(category);
+    }
+
+    @Override
+    public String addHashTag(String transactionId, String hashTag) throws CustomException {
+        Transactions transaction = transactionRepo.findById(transactionId)
+                .orElseThrow(() -> new CustomException(ErrorCode.INVALID_TRANSACTION_ID.name()));
+        transaction.getTags().add(hashTag);
+        transactionRepo.save(transaction);
+        trackingUpdateService.updateHashTags();
+        return hashTag;
     }
 
     @Override

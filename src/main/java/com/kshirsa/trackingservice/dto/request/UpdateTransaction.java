@@ -31,7 +31,6 @@ public class UpdateTransaction {
     private LocalDateTime transactionTime;
     private String categoryId;
     private Boolean isRecurring;
-    private Set<String> tags;
     @Nullable
     private UpdateLoanDetails loanDetails;
 }
