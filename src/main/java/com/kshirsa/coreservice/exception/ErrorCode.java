@@ -25,6 +25,7 @@ public enum ErrorCode {
     INVALID_EMAIL_DOMAIN(400, 708, "The email domain is invalid."),
     INVALID_CATEGORY(400, 709, "The provided category id is invalid."),
     INVALID_TRANSACTION_ID(400, 710, "The provided transaction ID is not valid."),
+    MISSING_HEADER(400, 711, "The required header is missing."),
 
     // Business Logic and Entity Errors (8xx)
     EMAIL_ALREADY_EXISTS(422, 801, "Email ID is already in use. Please use a different email address."),
