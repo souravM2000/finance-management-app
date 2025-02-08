@@ -22,7 +22,6 @@ public class ViewTransaction {
     private PaymentMode paymentMode;
     private String note;
     private TransactionType transactionType;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime transactionTime;
     private String category;
     private Set<String> tags;

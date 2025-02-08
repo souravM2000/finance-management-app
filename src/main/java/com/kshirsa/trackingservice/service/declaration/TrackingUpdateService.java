@@ -15,7 +15,4 @@ public interface TrackingUpdateService {
     Transactions updateTransaction(UpdateTransaction updateTransaction) throws CustomException;
 
     LoanRepayment updateLoanRepayment(UpdateLoanRepayment updateLoanRepayment) throws CustomException;
-
-    @Async
-    void updateHashTags();
 }

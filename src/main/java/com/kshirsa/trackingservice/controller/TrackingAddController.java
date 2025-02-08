@@ -38,13 +38,6 @@ public class TrackingAddController extends BaseController {
         return ok(trackingAddService.addCategory(category), env.getProperty("CATEGORY.ADD.SUCCESS"));
     }
 
-    @Operation(summary = "Add a new hash tag")
-    @PostMapping("/hash-tag")
-    public ResponseEntity<SuccessResponse<String>> addHashTag(@RequestParam String transactionId,
-                                                              @RequestParam String hashTag) throws CustomException {
-        return ok(trackingAddService.addHashTag(transactionId, hashTag), env.getProperty("HASH.TAG.ADD.SUCCESS"));
-    }
-
     @Operation(summary = "Add a new transaction")
     @PostMapping("/transaction")
     public ResponseEntity<SuccessResponse<Transactions>> addTransaction(@RequestBody @Valid AddTransaction transaction) throws CustomException {

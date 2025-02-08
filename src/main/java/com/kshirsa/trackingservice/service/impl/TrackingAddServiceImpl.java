@@ -8,6 +8,7 @@ import com.kshirsa.trackingservice.dto.request.AddTransaction;
 import com.kshirsa.trackingservice.entity.*;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.trackingservice.repository.*;
+import com.kshirsa.trackingservice.service.AsyncService;
 import com.kshirsa.trackingservice.service.declaration.TrackingAddService;
 import com.kshirsa.trackingservice.service.declaration.TrackingUpdateService;
 import com.kshirsa.userservice.entity.UserDetails;
@@ -29,7 +30,7 @@ public class TrackingAddServiceImpl implements TrackingAddService {
     private final LoanDetailsRepo loanDetailsRepo;
     private final HashTagRepo hashTagRepo;
     private final LoanRepaymentRepo loanRepaymentRepo;
-    private final TrackingUpdateService trackingUpdateService;
+    private final AsyncService asyncService;
 
     @Override
     public Category addCategory(AddCategory categoryReq) {
@@ -44,7 +45,7 @@ public class TrackingAddServiceImpl implements TrackingAddService {
                 .orElseThrow(() -> new CustomException(ErrorCode.INVALID_TRANSACTION_ID.name()));
         transaction.getTags().add(hashTag);
         transactionRepo.save(transaction);
-        trackingUpdateService.updateHashTags();
+        asyncService.updateHashTags();
         return hashTag;
     }
 

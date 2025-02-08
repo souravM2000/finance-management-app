@@ -47,12 +47,4 @@ public class TrackingDeleteController extends BaseController {
         trackingDeleteService.deleteTransaction(transactionId);
         return ok(null, env.getProperty("TRANSACTION.DELETE.SUCCESS"));
     }
-
-    @Operation(summary = "Delete a hash tag")
-    @DeleteMapping("/hash-tag")
-    public ResponseEntity<SuccessResponse<Void>> deleteHashTag(@RequestParam String transactionId,
-                                                               @RequestParam String hashTag) throws CustomException {
-        trackingDeleteService.deleteHashTag(transactionId, hashTag);
-        return ok(null, env.getProperty("HASH.TAG.DELETE.SUCCESS"));
-    }
 }

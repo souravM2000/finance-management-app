@@ -6,6 +6,4 @@ public interface TrackingDeleteService {
     void deleteCategory(String categoryId);
 
     void deleteTransaction(String transactionId);
-
-    void deleteHashTag(String transactionId, String hashTag) throws CustomException;
 }

@@ -17,7 +17,7 @@ import java.util.Set;
 public class UpdateTransaction {
 
     public record UpdateLoanDetails(
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy") LocalDate expectedPaymentDate,
+            LocalDate expectedPaymentDate,
             String transactingParty) {
     }
 
@@ -27,10 +27,10 @@ public class UpdateTransaction {
     private PaymentMode paymentMode;
     private String note;
     private TransactionType transactionType;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime transactionTime;
     private String categoryId;
     private Boolean isRecurring;
+    private Set<String> tags;
     @Nullable
     private UpdateLoanDetails loanDetails;
 }

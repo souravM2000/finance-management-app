@@ -40,7 +40,7 @@ public class TrackingUpdateController extends BaseController {
         return ok(updateService.updateCategory(category), env.getProperty("CATEGORY.UPDATE.SUCCESS"));
     }
 
-    @Operation(summary = "Update Transaction", description = "Update transaction details. Hashtags can't be updated here. Use separate API for that.")
+    @Operation(summary = "Update Transaction", description = "Update transaction details.")
     @PutMapping("/transaction")
     public ResponseEntity<SuccessResponse<Transactions>> updateTransaction(@RequestBody UpdateTransaction updateTransaction) throws CustomException {
         return ok(updateService.updateTransaction(updateTransaction), env.getProperty("TRANSACTION.UPDATE.SUCCESS"));

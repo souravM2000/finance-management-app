@@ -14,7 +14,7 @@ import java.util.Set;
 @Data
 public class AddTransaction {
 
-    public record AddLoanDetails(@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy")LocalDate expectedPaymentDate,
+    public record AddLoanDetails(LocalDate expectedPaymentDate,
                                  String transactingParty) {}
 
     @NotNull
@@ -25,7 +25,6 @@ public class AddTransaction {
     @NotNull
     private TransactionType transactionType;
     @NotNull
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
     private LocalDateTime transactionTime;
     @NotNull
     private String categoryId;

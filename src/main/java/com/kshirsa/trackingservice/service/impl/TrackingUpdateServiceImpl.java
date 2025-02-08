@@ -8,11 +8,10 @@ import com.kshirsa.trackingservice.dto.request.UpdateTransaction;
 import com.kshirsa.trackingservice.entity.*;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.trackingservice.repository.*;
+import com.kshirsa.trackingservice.service.AsyncService;
 import com.kshirsa.trackingservice.service.declaration.TrackingUpdateService;
-import com.kshirsa.userservice.service.declaration.UserDetailsService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -24,8 +23,7 @@ public class TrackingUpdateServiceImpl implements TrackingUpdateService {
     private final TransactionRepo transactionRepo;
     private final LoanDetailsRepo loanDetailsRepo;
     private final LoanRepaymentRepo loanRepaymentRepo;
-    private final UserDetailsService userDetailsService;
-    private final HashTagRepo hashTagRepo;
+    private final AsyncService asyncService;
 
     @Override
     public Category updateCategory(UpdateCategory categoryDto) throws CustomException {
@@ -68,7 +66,12 @@ public class TrackingUpdateServiceImpl implements TrackingUpdateService {
             loanDetails.setTransactingParty(updateTransaction.getLoanDetails().transactingParty());
             transactions.setLoanDetails(loanDetails);                                               // Updating Loan Details
         }
-        return transactionRepo.save(transactions);
+
+        transactions.setTags(updateTransaction.getTags());
+        transactions = transactionRepo.save(transactions);
+        asyncService.updateHashTags();                                                            // Updating Hash Tags in hash_tags table
+
+        return transactions;
     }
 
     @Override
@@ -87,12 +90,5 @@ public class TrackingUpdateServiceImpl implements TrackingUpdateService {
 
         loanDetailsRepo.save(loanRepayment.getLoanDetails());                                       // Saving Loan Details
         return loanRepaymentRepo.save(loanRepayment);                                               // Saving Loan Repayment
-    }
-
-    @Async
-    @Override
-    public void updateHashTags(){
-        String userId = userDetailsService.getUser();
-        hashTagRepo.save(new HashTags(userId,transactionRepo.findHashTagsByUserId(userId)));
     }
 }
