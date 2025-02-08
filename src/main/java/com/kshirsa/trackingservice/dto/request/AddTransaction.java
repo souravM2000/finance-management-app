@@ -3,7 +3,6 @@ package com.kshirsa.trackingservice.dto.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.kshirsa.trackingservice.entity.enums.PaymentMode;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
-import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
