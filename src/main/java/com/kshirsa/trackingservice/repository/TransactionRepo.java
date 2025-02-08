@@ -12,7 +12,8 @@ import java.util.Set;
 
 public interface TransactionRepo extends ListCrudRepository<Transactions, String> {
 
-    List<Transactions> findAllByUserDetails_UserId(String user, Pageable pageable);
+    @Query(value = " SELECT * FROM transactions WHERE user_id = ?1 ", nativeQuery = true)
+    List<Transactions> findAllByUserId(String user, Pageable pageRequest);
 
     @Query(value = """
                         WITH search_results AS ( SELECT tr.* FROM transactions tr WHERE tr.user_id = ?9 )

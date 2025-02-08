@@ -47,8 +47,9 @@ public class TrackingGetServiceImpl implements TrackingGetService {
 
     @Override
     public List<ViewTransaction> getRecentTransaction() {
-        Pageable pageable = PageRequest.of(0, 10);
-        List<Transactions> transactionsList = transactionRepo.findAllByUserDetails_UserId(userDetailsService.getUser(), pageable);
+        PageRequest pageRequest = PageRequest.of(0, 10);
+        List<Transactions> transactionsList = transactionRepo.findAllByUserId(userDetailsService.getUser(),
+                pageRequest.withSort(SortBy.Latest.getSortDirection(), SortBy.Latest.getSortBy()));
         if (transactionsList != null)
             return transactionsList.stream().map(TrackingGetServiceImpl::convertToViewTransaction).toList();
         return null;
