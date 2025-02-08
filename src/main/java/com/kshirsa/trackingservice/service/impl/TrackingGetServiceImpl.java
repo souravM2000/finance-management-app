@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kshirsa.coreservice.exception.CustomException;
 import com.kshirsa.coreservice.exception.ErrorCode;
 import com.kshirsa.trackingservice.dto.TrackingFilter;
+import com.kshirsa.trackingservice.dto.response.CategoryResponse;
 import com.kshirsa.trackingservice.dto.response.TrackingFilterRes;
 import com.kshirsa.trackingservice.dto.response.ViewTransaction;
 import com.kshirsa.trackingservice.entity.Category;
@@ -21,6 +22,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
@@ -35,8 +37,17 @@ public class TrackingGetServiceImpl implements TrackingGetService {
     private final ObjectMapper objectMapper;
 
     @Override
-    public List<Category> getCategory(TransactionType type) {
-        return categoryRepo.getAllCategory(userDetailsService.getUser(), type.name());
+    public List<CategoryResponse> getCategory(TransactionType type) {
+        List<Category> categoryList = categoryRepo.getAllCategory(userDetailsService.getUser(), type.name());
+        List<CategoryResponse> categoryResponse = new ArrayList<>();
+        if (categoryList != null) {
+            categoryList.forEach(category -> categoryResponse.add(new CategoryResponse(category,
+                                    category.getCreatedBy().equalsIgnoreCase("SYSTEM") || !category.getTransactions().isEmpty()
+                            )
+                    )
+            );
+        }
+        return categoryResponse;
     }
 
     @Override

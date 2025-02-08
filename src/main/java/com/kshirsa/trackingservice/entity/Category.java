@@ -1,11 +1,14 @@
 package com.kshirsa.trackingservice.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kshirsa.trackingservice.dto.request.AddCategory;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.utility.IdGenerator;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 @Data
 @NoArgsConstructor
@@ -19,6 +22,9 @@ public class Category {
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
     private String createdBy;
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
+    private List<Transactions> transactions;
 
     public Category(AddCategory addCategory) {
         this.categoryId = IdGenerator.generateCategoryId();

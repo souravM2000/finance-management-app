@@ -6,9 +6,9 @@ import com.kshirsa.coreservice.BaseController;
 import com.kshirsa.coreservice.SuccessResponse;
 import com.kshirsa.coreservice.exception.CustomException;
 import com.kshirsa.trackingservice.dto.TrackingFilter;
+import com.kshirsa.trackingservice.dto.response.CategoryResponse;
 import com.kshirsa.trackingservice.dto.response.TrackingFilterRes;
 import com.kshirsa.trackingservice.dto.response.ViewTransaction;
-import com.kshirsa.trackingservice.entity.Category;
 import com.kshirsa.trackingservice.entity.Transactions;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.trackingservice.service.declaration.TrackingGetService;
@@ -38,7 +38,7 @@ public class TrackingGetController extends BaseController {
 
     @Operation(summary = "Get all categories for a transaction type")
     @GetMapping("/category")
-    public ResponseEntity<SuccessResponse<List<Category>>> getCategory(TransactionType type) {
+    public ResponseEntity<SuccessResponse<List<CategoryResponse>>> getCategory(TransactionType type) {
         return ok(trackingGetService.getCategory(type), env.getProperty("CATEGORY.FETCH.SUCCESS"));
     }
 
