@@ -34,7 +34,7 @@ public class Transactions {
     private String note;
     @Enumerated(EnumType.STRING)
     private TransactionType transactionType;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime transactionTime;
     private Boolean isRecurring;
     @CreationTimestamp

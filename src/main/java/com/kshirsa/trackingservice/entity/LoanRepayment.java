@@ -13,7 +13,7 @@ public class LoanRepayment {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String loanRepaymentId;
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd-MM-yyyy HH:mm:ss")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     private LocalDateTime paymentDate;
     private Double amount;
     private String note;
