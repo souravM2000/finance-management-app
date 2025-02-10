@@ -1,6 +1,7 @@
 package com.kshirsa.trackingservice.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.kshirsa.trackingservice.dto.request.AddTransaction;
 import com.kshirsa.utility.IdGenerator;
 import jakarta.persistence.*;
@@ -22,6 +23,7 @@ public class LoanDetails {
     @SuppressWarnings("JpaDataSourceORMInspection")
     @OneToOne()
     @JoinColumn(name = "transaction")
+    @JsonIgnore
     private Transactions transaction;
     private String transactingParty;
     private Double paidAmount;

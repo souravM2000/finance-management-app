@@ -44,7 +44,7 @@ public class TrackingAddServiceImpl implements TrackingAddService {
                 .orElseThrow(() -> new CustomException(ErrorCode.INVALID_TRANSACTION_ID.name()));
         transaction.getTags().add(hashTag);
         transactionRepo.save(transaction);
-        asyncService.updateHashTags();
+        asyncService.updateHashTags(userDetailsService.getUser());
         return hashTag;
     }
 

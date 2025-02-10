@@ -38,7 +38,7 @@ public class TrackingAddController extends BaseController {
         return ok(trackingAddService.addCategory(category), env.getProperty("CATEGORY.ADD.SUCCESS"));
     }
 
-    @Operation(summary = "Add a new transaction")
+    @Operation(summary = "Add a new transaction", description = "transactionType : EXPENSE, INCOME, LOAN; paymentMode : CASH, DEBIT_CARD, CREDIT_CARD, UPI, NET_BANKING;")
     @PostMapping("/transaction")
     public ResponseEntity<SuccessResponse<Transactions>> addTransaction(@RequestBody @Valid AddTransaction transaction) throws CustomException {
         return ok(trackingAddService.addTransaction(transaction), env.getProperty("TRANSACTION.ADD.SUCCESS"));

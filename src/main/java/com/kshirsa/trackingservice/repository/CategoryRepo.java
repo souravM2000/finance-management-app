@@ -11,7 +11,7 @@ public interface CategoryRepo extends ListCrudRepository<Category,String> {
 
     @Query(value =
             """
-            SELECT * FROM category c WHERE c.created_by = ?1 OR c.created_by = 'SYSTEM'
+            SELECT * FROM category c WHERE (c.created_by = ?1 OR c.created_by = 'SYSTEM')
             AND ( ?2 IS NULL OR c.transaction_type = ?2 )
             """, nativeQuery = true)
     List<Category> getAllCategory(String userId, String transactionType);

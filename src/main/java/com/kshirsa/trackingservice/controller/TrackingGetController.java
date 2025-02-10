@@ -72,7 +72,7 @@ public class TrackingGetController extends BaseController {
 
     @Operation(summary = "Get all unique hashtags for the user")
     @GetMapping("/hashtags")
-    public ResponseEntity<SuccessResponse<Object>> getHashTags() {
+    public ResponseEntity<SuccessResponse<Object>> getHashTags() throws JsonProcessingException {
         return ok(trackingGetService.getHashTags(), env.getProperty("HASHTAGS.FETCH.SUCCESS"));
     }
 }

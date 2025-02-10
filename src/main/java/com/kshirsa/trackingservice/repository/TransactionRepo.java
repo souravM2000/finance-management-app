@@ -35,7 +35,7 @@ public interface TransactionRepo extends ListCrudRepository<Transactions, String
 
     @Query(value = """
                         SELECT DISTINCT tt.tags FROM transactions tr
-                        INNER JOIN transaction_tags tt ON t.transaction_id = tt.transaction_id
+                        INNER JOIN transaction_tags tt ON tr.transaction_id = tt.transaction_id
                         WHERE tr.user_id = ?1
             """, nativeQuery = true)
     Set<String> findHashTagsByUserId(String userId);

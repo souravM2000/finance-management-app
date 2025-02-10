@@ -6,6 +6,7 @@ import com.kshirsa.trackingservice.repository.LoanRepaymentRepo;
 import com.kshirsa.trackingservice.repository.TransactionRepo;
 import com.kshirsa.trackingservice.service.AsyncService;
 import com.kshirsa.trackingservice.service.declaration.TrackingDeleteService;
+import com.kshirsa.userservice.service.declaration.UserDetailsService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -20,6 +21,7 @@ public class TrackingDeleteServiceImpl implements TrackingDeleteService {
     private final TransactionRepo transactionRepo;
     private final LoanDetailsRepo loanDetailsRepo;
     private final LoanRepaymentRepo loanRepaymentRepo;
+    private final UserDetailsService userDetailsService;
     private final AsyncService asyncService;
 
     @Override
@@ -30,6 +32,6 @@ public class TrackingDeleteServiceImpl implements TrackingDeleteService {
     @Override
     public void deleteTransaction(String transactionId) {
         transactionRepo.deleteById(transactionId);
-        asyncService.updateHashTags();
+        asyncService.updateHashTags(userDetailsService.getUser());
     }
 }

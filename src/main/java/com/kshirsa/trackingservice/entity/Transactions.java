@@ -50,7 +50,7 @@ public class Transactions {
     @ElementCollection()
     @CollectionTable(name = "transaction_tags", joinColumns = @JoinColumn(name = "transaction_id"))
     private Set<String> tags;
-    @ManyToOne(cascade = CascadeType.REMOVE)
+    @ManyToOne
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private UserDetails userDetails;

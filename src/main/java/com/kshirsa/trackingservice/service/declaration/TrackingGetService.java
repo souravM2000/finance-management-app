@@ -16,7 +16,7 @@ public interface TrackingGetService {
 
     List<CategoryResponse> getCategory(TransactionType type);
 
-    Object getHashTags();
+    Object getHashTags() throws JsonProcessingException;
 
     List<ViewTransaction> getTransaction(TrackingFilter filter, Integer pageNumber, Integer transactionPerPage, String sortBy);
 

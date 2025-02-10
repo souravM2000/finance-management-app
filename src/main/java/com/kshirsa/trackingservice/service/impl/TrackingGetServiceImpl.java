@@ -25,6 +25,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -51,8 +52,8 @@ public class TrackingGetServiceImpl implements TrackingGetService {
     }
 
     @Override
-    public Object getHashTags() {
-        return hashTagRepo.findHashTagsByUserId(userDetailsService.getUser());
+    public Object getHashTags() throws JsonProcessingException {
+        return objectMapper.readValue((String) hashTagRepo.findHashTagsByUserId(userDetailsService.getUser()).orElseGet(String::new), Set.class);
     }
 
     @Override
@@ -118,7 +119,7 @@ public class TrackingGetServiceImpl implements TrackingGetService {
                 .categories(categoryRepo.getCategoryByUserId(userId))
                 .paymentModes(new HashSet<>(List.of(PaymentMode.values())))
                 .transactionTypes(new HashSet<>(List.of(TransactionType.values())))
-                .hashtags(objectMapper.readValue(jsonString, List.class)).build();
+                .hashtags(objectMapper.readValue(jsonString, Set.class)).build();
     }
 
     @Override

@@ -10,6 +10,7 @@ import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.trackingservice.repository.*;
 import com.kshirsa.trackingservice.service.AsyncService;
 import com.kshirsa.trackingservice.service.declaration.TrackingUpdateService;
+import com.kshirsa.userservice.service.declaration.UserDetailsService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ public class TrackingUpdateServiceImpl implements TrackingUpdateService {
     private final TransactionRepo transactionRepo;
     private final LoanDetailsRepo loanDetailsRepo;
     private final LoanRepaymentRepo loanRepaymentRepo;
+    private final UserDetailsService userDetailsService;
     private final AsyncService asyncService;
 
     @Override
@@ -69,7 +71,7 @@ public class TrackingUpdateServiceImpl implements TrackingUpdateService {
 
         transactions.setTags(updateTransaction.getTags());
         transactions = transactionRepo.save(transactions);
-        asyncService.updateHashTags();                                                            // Updating Hash Tags in hash_tags table
+        asyncService.updateHashTags(userDetailsService.getUser());                                                            // Updating Hash Tags in hash_tags table
 
         return transactions;
     }
