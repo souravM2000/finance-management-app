@@ -16,8 +16,6 @@ public class AsyncService {
 
     @Async
     public void updateHashTags(String userId) {
-        System.out.println("Updating HashTags");
         hashTagRepo.save(new HashTags(userId,transactionRepo.findHashTagsByUserId(userId)));
-        System.out.println("HashTags Updated");
     }
 }

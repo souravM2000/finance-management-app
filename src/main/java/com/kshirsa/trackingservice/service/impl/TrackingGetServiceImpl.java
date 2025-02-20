@@ -67,46 +67,20 @@ public class TrackingGetServiceImpl implements TrackingGetService {
     }
 
     @Override
-    public List<ViewTransaction> getTransaction(TrackingFilter filter, Integer pageNumber, Integer transactionPerPage, String sortBy) {
-
-        List<Transactions> transactions = null;
+    public List<ViewTransaction> getTransaction(TrackingFilter filter, Integer pageNumber, Integer transactionPerPage, SortBy sortBy) {
         PageRequest pageRequest = PageRequest.of(pageNumber - 1, transactionPerPage);
         if (filter == null)
             filter = new TrackingFilter();
 
-        if (SortBy.Latest.name().equalsIgnoreCase(sortBy)) {
+        List<Transactions> transactions = transactionRepo.findTransactions(filter.getCategory(), filter.getPaymentMode(),
+                filter.getTransactionType(), filter.getAmountMax(), filter.getAmountMin(), filter.getTransactionAfter(),
+                filter.getTransactionBefore(), filter.getHashTag(), userDetailsService.getUser(),
+                pageRequest.withSort(sortBy.getSortDirection(), sortBy.getSortBy()));
 
-            transactions = transactionRepo.findTransactions(filter.getCategory(), filter.getPaymentMode(),
-                    filter.getTransactionType(), filter.getAmountMax(), filter.getAmountMin(), filter.getTransactionAfter(),
-                    filter.getTransactionBefore(), filter.getHashTag(), userDetailsService.getUser(),
-                    pageRequest.withSort(SortBy.Latest.getSortDirection(), SortBy.Latest.getSortBy()));
-
-        } else if (SortBy.Oldest.name().equalsIgnoreCase(sortBy)) {
-
-            transactions = transactionRepo.findTransactions(filter.getCategory(), filter.getPaymentMode(),
-                    filter.getTransactionType(), filter.getAmountMax(), filter.getAmountMin(), filter.getTransactionAfter(),
-                    filter.getTransactionBefore(), filter.getHashTag(), userDetailsService.getUser(),
-                    pageRequest.withSort(SortBy.Oldest.getSortDirection(), SortBy.Oldest.getSortBy()));
-
-        } else if (SortBy.AmountHighToLow.name().equalsIgnoreCase(sortBy)) {
-
-            transactions = transactionRepo.findTransactions(filter.getCategory(), filter.getPaymentMode(),
-                    filter.getTransactionType(), filter.getAmountMax(), filter.getAmountMin(), filter.getTransactionAfter(),
-                    filter.getTransactionBefore(), filter.getHashTag(), userDetailsService.getUser(),
-                    pageRequest.withSort(SortBy.AmountHighToLow.getSortDirection(), SortBy.AmountHighToLow.getSortBy()));
-
-        } else if (SortBy.AmountLowToHigh.name().equalsIgnoreCase(sortBy)) {
-
-            transactions = transactionRepo.findTransactions(filter.getCategory(), filter.getPaymentMode(),
-                    filter.getTransactionType(), filter.getAmountMax(), filter.getAmountMin(), filter.getTransactionAfter(),
-                    filter.getTransactionBefore(), filter.getHashTag(), userDetailsService.getUser(),
-                    pageRequest.withSort(SortBy.AmountLowToHigh.getSortDirection(), SortBy.AmountLowToHigh.getSortBy()));
-
-        }
         if (transactions != null)
             return transactions.stream().map(TrackingGetServiceImpl::convertToViewTransaction).toList();
 
-        return null;
+        return new ArrayList<>();
     }
 
     @Override

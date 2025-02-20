@@ -10,6 +10,7 @@ import com.kshirsa.trackingservice.dto.response.CategoryResponse;
 import com.kshirsa.trackingservice.dto.response.TrackingFilterRes;
 import com.kshirsa.trackingservice.dto.response.ViewTransaction;
 import com.kshirsa.trackingservice.entity.Transactions;
+import com.kshirsa.trackingservice.entity.enums.SortBy;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.trackingservice.service.declaration.TrackingGetService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -60,7 +61,7 @@ public class TrackingGetController extends BaseController {
     public ResponseEntity<SuccessResponse<List<ViewTransaction>>> getTransactions(@ParameterObject @ModelAttribute TrackingFilter filter,
                                                                                   @RequestParam(required = false, defaultValue = "1") Integer pageNumber,
                                                                                   @RequestParam(required = false, defaultValue = "6") Integer transactionPerPage,
-                                                                                  @RequestParam(required = false, defaultValue = "Latest") String sortBy) {
+                                                                                  @RequestParam(required = false, defaultValue = "Latest") SortBy sortBy) {
         return ok(trackingGetService.getTransaction(filter, pageNumber, transactionPerPage, sortBy), env.getProperty("TRANSACTIONS.FETCH.SUCCESS"));
     }
 

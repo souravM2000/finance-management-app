@@ -4,13 +4,17 @@ import com.kshirsa.trackingservice.entity.enums.PaymentMode;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Set;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class AddTransaction {
 
     public record AddLoanDetails(LocalDate expectedPaymentDate,

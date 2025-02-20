@@ -6,6 +6,7 @@ import com.kshirsa.trackingservice.dto.TrackingFilter;
 import com.kshirsa.trackingservice.dto.response.CategoryResponse;
 import com.kshirsa.trackingservice.dto.response.TrackingFilterRes;
 import com.kshirsa.trackingservice.dto.response.ViewTransaction;
+import com.kshirsa.trackingservice.entity.enums.SortBy;
 import com.kshirsa.trackingservice.entity.enums.TransactionType;
 import com.kshirsa.trackingservice.entity.Transactions;
 
@@ -18,7 +19,7 @@ public interface TrackingGetService {
 
     Object getHashTags() throws JsonProcessingException;
 
-    List<ViewTransaction> getTransaction(TrackingFilter filter, Integer pageNumber, Integer transactionPerPage, String sortBy);
+    List<ViewTransaction> getTransaction(TrackingFilter filter, Integer pageNumber, Integer transactionPerPage, SortBy sortBy);
 
     TrackingFilterRes getTransactionFilter() throws JsonProcessingException;
 
